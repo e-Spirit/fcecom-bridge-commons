@@ -83,8 +83,8 @@ describe('Products', () => {
 
       await controller.productsProductIdsHead(reqMock, resMock, undefined);
 
-      expect(resMock.send.mock.calls.length).toBe(1);
-      expect(resMock.send.mock.calls[0][0]).toBe(200);
+      expect(resMock.sendStatus.mock.calls.length).toBe(1);
+      expect(resMock.sendStatus.mock.calls[0][0]).toBe(200);
     });
   });
 });

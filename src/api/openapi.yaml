@@ -77,8 +77,7 @@ paths:
             items:
               type: string
           example:
-            - cat-1
-            - cat-2
+            - ""
         - name: lang
           in: query
           description: The language to localize the label
@@ -87,7 +86,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "200":
           description: List of Categories or `null` if it does not exist.
@@ -133,8 +131,7 @@ paths:
             items:
               type: string
           example:
-            - cat-1
-            - cat-2
+            - ""
         - name: lang
           in: query
           description: The language to localize the label
@@ -143,7 +140,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "200":
           description: List of Categories or `null` if it does not exist.
@@ -204,7 +200,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: cat-1
         - name: lang
           in: query
           description: The language to localize the label
@@ -213,7 +208,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
         - name: page
           in: query
           description: Specific result page
@@ -271,7 +265,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: cat-1
         - name: lang
           in: query
           description: The language to localize the label
@@ -280,7 +273,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "200":
           description: Category Tree
@@ -339,7 +331,6 @@ paths:
           explode: false
           schema:
             type: string
-          example: homepage
         - name: lang
           in: query
           description: The language to localize the label
@@ -348,7 +339,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       requestBody:
         content:
           application/json:
@@ -398,7 +388,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "204":
           description: Deletion successful
@@ -432,8 +421,7 @@ paths:
             items:
               type: string
           example:
-            - homepage
-            - my-custom-page
+            - ""
         - name: lang
           in: query
           description: The language to localize the label
@@ -442,7 +430,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "200":
           description: List of Content Pages or `null` if it does not exist
@@ -484,7 +471,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: page
         - name: lang
           in: query
           description: The language to localize the label
@@ -493,7 +479,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
         - name: page
           in: query
           description: Specific result page
@@ -549,7 +534,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       requestBody:
         content:
           application/json:
@@ -617,7 +601,6 @@ paths:
           schema:
             type: string
             format: url
-          example: https://mycommerce.com/catalog/category-1-1/prod-x
       responses:
         "200":
           description: Identifier Object or `null` if not exists
@@ -658,7 +641,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: cat-1
         - name: q
           in: query
           description: Fulltext search query string
@@ -667,7 +649,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: page
         - name: lang
           in: query
           description: The language to localize the label
@@ -676,7 +657,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
         - name: page
           in: query
           description: Specific result page
@@ -736,8 +716,7 @@ paths:
             items:
               type: string
           example:
-            - prod-1
-            - prod-2
+            - ""
         - name: lang
           in: query
           description: The language to localize the label
@@ -746,7 +725,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "200":
           description: List of Products or `null` if it does not exist
@@ -791,8 +769,7 @@ paths:
             items:
               type: string
           example:
-            - prod-1
-            - prod-2
+            - ""
         - name: lang
           in: query
           description: The language to localize the label
@@ -801,7 +778,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "200":
           description: List of Products or `null` if it does not exist.
@@ -881,7 +857,6 @@ paths:
           explode: true
           schema:
             type: string
-          example: EN
       responses:
         "200":
           description: A Storefront URL or `null` if not exists
@@ -967,10 +942,13 @@ components:
       properties:
         template:
           type: string
-          description: The name of the template used in FirstSpirit
+          description: The name of the template used in FirstSpirit.
         visible:
           type: boolean
           description: Defines visibility of a page.
+        pageUid:
+          type: string
+          description: The uid of the page used in FirstSpirit.
         label:
           type: string
           description: Localized label
@@ -1101,7 +1079,6 @@ components:
       explode: true
       schema:
         type: string
-      example: EN
     page:
       name: page
       in: query
@@ -1122,7 +1099,6 @@ components:
       explode: true
       schema:
         type: string
-      example: page
     contentIds:
       name: contentIds
       in: path
@@ -1135,8 +1111,7 @@ components:
         items:
           type: string
       example:
-        - homepage
-        - my-custom-page
+        - ""
     productIds:
       name: productIds
       in: path
@@ -1149,8 +1124,7 @@ components:
         items:
           type: string
       example:
-        - prod-1
-        - prod-2
+        - ""
     categoryIds:
       name: categoryIds
       in: path
@@ -1163,8 +1137,7 @@ components:
         items:
           type: string
       example:
-        - cat-1
-        - cat-2
+        - ""
     url:
       name: url
       in: query
@@ -1175,7 +1148,6 @@ components:
       schema:
         type: string
         format: url
-      example: https://mycommerce.com/catalog/category-1-1/prod-x
   examples:
     StorefrontUrl:
       summary: Product Storefront URL
@@ -1241,6 +1213,7 @@ components:
     ContentPage:
       summary: Content Page
       value:
+        pageUid: uid
         template: content
         visible: true
         label: Homepage

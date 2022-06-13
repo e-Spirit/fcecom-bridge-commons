@@ -111,7 +111,7 @@ describe('Categories', () => {
 
       await controller.categoryTreeHead(reqMock, resMock);
 
-      expect(resMock.send.mock.calls[0][0]).toEqual(200);
+      expect(resMock.sendStatus.mock.calls[0][0]).toEqual(200);
     });
     it('returns an error if contentPages feature is disabled', async () => {
       const resMock = generateResponseMock();
@@ -121,7 +121,7 @@ describe('Categories', () => {
 
       await controller.categoryTreeHead(reqMock, resMock);
 
-      expect(resMock.send.mock.calls[0][0]).toEqual(404);
+      expect(resMock.sendStatus.mock.calls[0][0]).toEqual(404);
     });
   });
 });

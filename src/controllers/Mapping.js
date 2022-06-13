@@ -4,23 +4,24 @@ const utils = require('../../src/utils/writer.js');
 
 module.exports = function (service) {
   const lookupUrlGet = async function lookupUrlGet(req, res, next, url) {
-    await service.lookupUrlGet(url)
-      .then(function (response) {
-        utils.writeJson(res, response);
-      })
-      .catch(function (response) {
-        utils.writeJson(res, response);
-      });
+    try {
+    const response = await service.lookupUrlGet(url)
+      utils.writeJson(res, response);
+    }
+    catch {
+      utils.writeJson(res, response);
+    }
   };
 
   const storefrontUrlGet = async function storefrontUrlGet(req, res, next, type, id, lang) {
-    await service.storefrontUrlGet(type, id, lang)
-      .then(function (response) {
-        utils.writeJson(res, response);
-      })
-      .catch(function (response) {
-        utils.writeJson(res, response);
-      });
+    try {
+      const response = await service.storefrontUrlGet(type, id, lang)
+      utils.writeJson(res, response);
+    }
+    catch (err)
+    {
+      utils.writeJson(res, err);
+    }
   };
 
   return {

@@ -8,6 +8,7 @@ describe('Config', () => {
             password: 'password123',
             servicesDir: 'SERVICES',
             port: 1337,
+            logLevel: 'INFO',
             features: {
                 contentPages: true,
                 categoryTree: true
@@ -26,6 +27,7 @@ describe('Config', () => {
             password: 'password123',
             servicesDir: 'SERVICES',
             port: 3000,
+            logLevel: 'INFO',
             features: {
                 contentPages: true,
                 categoryTree: true
@@ -39,6 +41,7 @@ describe('Config', () => {
             username: 'johndoe',
             servicesDir: 'SERVICES',
             port: 3000,
+            logLevel: 'INFO',
             features: {
                 contentPages: true,
                 categoryTree: true
@@ -52,6 +55,7 @@ describe('Config', () => {
             username: 'johndoe',
             password: 'password',
             port: 3000,
+            logLevel: 'INFO',
             features: {
                 contentPages: true,
                 categoryTree: true
@@ -65,6 +69,7 @@ describe('Config', () => {
             username: 'johndoe',
             password: 'password123',
             servicesDir: 'SERVICES',
+            logLevel: 'INFO',
             features: {
                 contentPages: true,
                 categoryTree: true
@@ -80,7 +85,8 @@ describe('Config', () => {
             username: 'johndoe',
             password: 'password123',
             servicesDir: 'SERVICES',
-            port: 3000
+            port: 3000,
+            logLevel: 'INFO'
         };
 
         const result = getConfig(config);
@@ -94,6 +100,7 @@ describe('Config', () => {
             password: 'password123',
             servicesDir: 'SERVICES',
             port: 3000,
+            logLevel: 'INFO',
             useSsl: true,
             sslCert: undefined,
             sslKey: 'KEY'
@@ -107,6 +114,7 @@ describe('Config', () => {
             password: 'password123',
             servicesDir: 'SERVICES',
             port: 3000,
+            logLevel: 'INFO',
             useSsl: true,
             sslCert: 'CERT',
             sslKey: undefined
@@ -114,5 +122,24 @@ describe('Config', () => {
 
         expect(() => getConfig(config)).toThrow('No SSL key set');
     });
+      it('falls back to a default value for logLevel', async () => {
+          const config = {
+              username: 'johndoe',
+              password: 'password123',
+              servicesDir: 'SERVICES',
+              port: 1337,
+              features: {
+                  contentPages: true,
+                  categoryTree: true
+              },
+              useSsl: true,
+              sslCert: 'CERT',
+              sslKey: 'KEY'
+          };
+
+          const result = getConfig(config);
+
+          expect(result.logLevel).toEqual('INFO');
+      });
   });
 });

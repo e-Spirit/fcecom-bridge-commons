@@ -4,6 +4,7 @@ const getConfig = (config) => {
         password: null,
         servicesDir: null,
         port: 3000,
+        logLevel: 'INFO',
         features: {
             contentPages: false,
             categoryTree: false

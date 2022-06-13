@@ -4,6 +4,7 @@ const https = require('https');
 const fs = require('fs');
 const { createRouterConfig } = require('./routerUtils');
 const { getConfig } = require('./config');
+const { createLogger, LogLevel } = require('./utils/logger')
 
 const BridgeCore = (config) => {
   config = getConfig(config);
@@ -22,6 +23,9 @@ const BridgeCore = (config) => {
           }
         },
       }
+    },
+    logging: {
+      errorLimit: LogLevel[config.logLevel]
     }
   };
 
@@ -55,4 +59,7 @@ const BridgeCore = (config) => {
 
 };
 
-module.exports = BridgeCore;
+module.exports = {
+  BridgeCore,
+  createLogger
+};
