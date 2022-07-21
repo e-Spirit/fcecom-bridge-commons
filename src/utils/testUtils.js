@@ -5,7 +5,7 @@ module.exports.generateAppMock = () => {
         put: jest.fn(),
         delete: jest.fn(),
         head: jest.fn()
-    }
+    };
 };
 
 module.exports.generateResponseMock = () => {

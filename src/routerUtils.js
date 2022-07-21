@@ -1,4 +1,3 @@
-
 const path = require('path');
 const fs = require('fs');
 
@@ -12,7 +11,6 @@ const getServicesFromDir = (dir) => {
     const services = {};
 
     fs.readdirSync(dir).forEach((fileName) => {
-
         if (fileName.endsWith('js') && !fileName.endsWith('.spec.js')) {
             const service = require(path.join(dir, fileName));
             const serviceName = /(.*).js/.exec(fileName) ? /(.*).js/.exec(fileName)[1] : null;
@@ -26,14 +24,12 @@ const getServicesFromDir = (dir) => {
 
 /**
  * Creates a controller configuration for the router to be used by oas3-tools.
- * 
+ *
  * @param {string} controllerPath The path to the controller file to require.
  * @param {string} servicesDir The path to the directory that contains the services.
- * @param {[featureName: string]: boolean} features Object that defines the optional features supported by the bridge.
  * @return {object} An object representing the controller. Will be empty if an error occured.
  */
-const getController = (controllerPath, servicesDir, features) => {
-    const controller = require(controllerPath);
+const getController = (controllerPath, servicesDir) => {
     const controllerName = path.basename(controllerPath).replace('.js', '');
     const services = getServicesFromDir(servicesDir);
     const service = services[`${controllerName}Service`];
@@ -41,34 +37,45 @@ const getController = (controllerPath, servicesDir, features) => {
         console.error(`Failed to get service for controller '${controllerName}`);
         return {};
     }
-    const actions = controller(service, features);
-    const result = {};
-    Object.keys(actions).forEach((key) => {
-        result[`${controllerName}_${key}`] = actions[key];
-    });
-    return result;
+    return { [controllerPath]: service };
 };
-
 
 /**
  * Creates a controller configuration for the router to be used by oas3-tools.
- * 
+ *
  * @param {string} controllerDir The path to the controller directory.
  * @param {string} servicesDir The path to the directory that contains the services.
- * @param {[featureName: string]: boolean} features Object that defines the optional features supported by the bridge.
  * @return {*} An object representing the controller.
  */
-const createRouterConfig = (controllerDir, servicesDir, features) => {
+const createRouterConfig = (controllerDir, servicesDir) => {
     const result = {};
     fs.readdirSync(controllerDir).forEach((fileName) => {
         if (fileName.endsWith('js') && !fileName.includes('.spec.')) {
-            Object.assign(result, { ...getController(path.join(controllerDir, fileName), servicesDir, features) });
+            Object.assign(result, { ...getController(path.join(controllerDir, fileName), servicesDir) });
         }
     });
 
     return result;
 };
 
+/**
+ * Creates an api object for the routing to be used by swagger-express-routes
+ *
+ * @param {string} controllerDir The path to the controller directory.
+ * @param {string} servicesDir The path to the directory that contains the services.
+ * @param {[featureName: string]: boolean} features Object that defines the optional features supported by the bridge.
+ * @return {*} An object representing the controller.
+ */
+const createApi = (controllerDir, servicesDir, features) => {
+    const controllers = createRouterConfig(controllerDir, servicesDir);
+    let api = {};
+    for (const apiElement in controllers) {
+        const controller = require(apiElement)(controllers[apiElement], features);
+        api = { ...api, ...controller };
+    }
+    return api;
+};
+
 module.exports = {
-    createRouterConfig
+    createApi
 };

@@ -1,11 +1,12 @@
 {
   "name": "fcecom-bridge-commons",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "FistSpirit Connect for Commerce - Common bridge parts",
   "main": "src/index.js",
   "scripts": {
     "ci": "npm ci",
-    "test": "jest --coverage --silent --resetMocks --collectCoverageFrom=src/**/*"
+    "test": "jest --coverage --silent --resetMocks --collectCoverageFrom=src/**/*",
+    "format": "prettier --write ."
   },
   "files": [
     "src"
@@ -18,9 +19,13 @@
     "url": "https://github.com/e-Spirit/fcecom-bridge-commons.git"
   },
   "dependencies": {
-    "oas3-tools": "^2.2.3"
+    "express": "^4.18.1",
+    "js-yaml": "^4.1.0",
+    "swagger-routes-express": "^3.3.1",
+    "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "prettier": "^2.7.1"
   }
 }
