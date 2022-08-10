@@ -47,7 +47,7 @@ module.exports = function (service, features) {
                 res.set({ 'X-Total': response.total, 'X-HasNext': response.hasNext });
                 utils.writeJson(res, response.contentPages);
             } catch (err) {
-                utils.writeJson(res, response);
+                utils.writeJson(res, err);
             }
         }
     };

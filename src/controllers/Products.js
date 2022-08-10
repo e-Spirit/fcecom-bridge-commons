@@ -24,7 +24,7 @@ module.exports = function (service) {
                 const response = await service.productsProductIdsGet(productIds, lang);
                 utils.writeJson(res, response.products);
             } catch (err) {
-                utils.writeJson(res, response);
+                utils.writeJson(res, err);
             }
         }
     };
