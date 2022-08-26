@@ -31,8 +31,8 @@ info:
   title: FirstSpirit Connect for Commerce - Bridge API
   version: 2.1.2
   x-logo:
-    altText: e-Spirit logo
-    url: e-Spirit_Logo2021_RGB_colour_black_XL_transp.png
+    url: 'crownpeak-Logo-Full-Color.png'
+    altText: Crownpeak Technology GmbH Logo
 servers:
 - url: /api
 security:

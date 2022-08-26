@@ -7,7 +7,7 @@ Full examples of how to use this module can be found [here](https://github.com/t
 
 Further information about how to implement and use a bridge can be found in the official [documentation](https://docs.e-spirit.com/ecom/fsconnect-com/FirstSpirit_Connect_for_Commerce_Documentation_EN.html).
 
-For more information about FirstSpirit or Connect for Commerce please use [this contact form](https://www.e-spirit.com/en/contact-us/) to get in touch.
+For more information about FirstSpirit or Connect for Commerce please use [this contact form](https://www.crownpeak.com/contact-us) to get in touch.
 
 ## How to use
 
@@ -100,7 +100,7 @@ If a method is noted to return `{ }`, the return value will be written as is.
     - -> `{ products: [] }`
 
 ## Legal Notices
-The Connect for Commerce Bridge Commons module is a product of [e-Spirit GmbH](http://www.e-spirit.com/), Dortmund, Germany. The Connect for Commerce Bridge Commons module is subject to the Apache-2.0 license.
+The Connect for Commerce Bridge Commons module is a product of [Crownpeak Technology GmbH](https://www.crownpeak.com), Dortmund, Germany. The Connect for Commerce Bridge Commons module is subject to the Apache-2.0 license.
 
 ## Disclaimer
-This document is provided for information purposes only. e-Spirit may change the contents hereof without notice. This document is not warranted to be error-free, nor subject to any other warranties or conditions, whether expressed orally or implied in law, including implied warranties and conditions of merchantability or fitness for a particular purpose. e-Spirit specifically disclaims any liability with respect to this document and no contractual obligations are formed either directly or indirectly by this document. The technologies, functionality, services, and processes described herein are subject to change without notice.
+This document is provided for information purposes only. Crownpeak may change the contents hereof without notice. This document is not warranted to be error-free, nor subject to any other warranties or conditions, whether expressed orally or implied in law, including implied warranties and conditions of merchantability or fitness for a particular purpose. Crownpeak specifically disclaims any liability with respect to this document and no contractual obligations are formed either directly or indirectly by this document. The technologies, functionality, services, and processes described herein are subject to change without notice.

@@ -1,6 +1,6 @@
 {
   "name": "fcecom-bridge-commons",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "FistSpirit Connect for Commerce - Common bridge parts",
   "main": "src/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "src"
   ],
   "keywords": [],
-  "author": "e-Spirit GmbH",
+  "author": "Crownpeak Technology GmbH",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
