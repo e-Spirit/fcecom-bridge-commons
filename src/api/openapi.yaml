@@ -29,10 +29,10 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 2.1.2
+  version: 2.1.4
   x-logo:
-    url: 'crownpeak-Logo-Full-Color.png'
     altText: Crownpeak Technology GmbH Logo
+    url: crownpeak-Logo-Full-Color.png
 servers:
 - url: /api
 security:
@@ -43,9 +43,14 @@ tags:
     ContentCreator. It is not intended to process all available category information
     from the shop backend.
   name: Categories
-- description: The contentpages endpoint fetches existing content pages from any given
-    shop backend. Existing content pages like the Homepage as well as custom FirstSpirit-driven
-    pages can be displayed in the content report inside the FirstSpirit ContentCreator.
+- description: "The contentpages endpoint fetches existing content pages from any\
+    \ given shop backend.\nExisting content pages like the Homepage as well as custom\
+    \ FirstSpirit-driven pages can be displayed in the content report inside the FirstSpirit\
+    \ ContentCreator.\n\n### Deprecation Notice\nThe ContentPages endpoint will soon\
+    \ be deprecated. The endpoint will be replaced with similar functionality. With\
+    \ the release of the replacement implementation, the existing implementation will\
+    \ remain functional for six months. A migration guide will be provided with the replacement\
+    \ implementation.\n"
   name: ContentPages
 - description: The Mapping endpoint provides the mapping between the Bridge API endpoints
     and any given commerce interface. It is possible to build or deconstruct a storefront
