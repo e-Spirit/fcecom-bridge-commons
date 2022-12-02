@@ -1,11 +1,14 @@
 'use strict';
 
 const utils = require('../../src/utils/writer.js');
+const { handleError } = require("../utils/errorUtils");
+const { extractParameters, getString, getNumber } = require('../utils/parameterExtractor.js');
 
 module.exports = function (service, features) {
     const categoriesGet = async function categoriesGet(req, res) {
         try {
-            const { parentId, lang, page } = req.query;
+            let { parentId, lang, page } = extractParameters(req.query);
+            page = page && getNumber(page, 'page');
             const response = await service.categoriesGet(parentId, lang, page);
             if (response.categories) {
                 res.set({ 'X-Total': response.total, 'X-HasNext': response.hasNext });
@@ -14,7 +17,7 @@ module.exports = function (service, features) {
                 utils.writeJson(res, response);
             }
         } catch (err) {
-            utils.writeJson(res, err);
+            handleError(res, err);
         }
     };
 
@@ -23,8 +26,8 @@ module.exports = function (service, features) {
             categoriesCategoryIdsHead(req, res);
         } else {
             try {
-                const { lang } = req.query;
-                const categoryIds = req.params['categoryIds'].split(',');
+                const { lang } = extractParameters(req.query);
+                const categoryIds = getString(req.params['categoryIds'], 'categoryIds').split(',');
                 const response = await service.categoriesCategoryIdsGet(categoryIds, lang);
                 if (response.categories) {
                     utils.writeJson(res, response.categories);
@@ -32,7 +35,7 @@ module.exports = function (service, features) {
                     utils.writeJson(res, response);
                 }
             } catch (err) {
-                utils.writeJson(res, err);
+                handleError(res, err);
             }
         }
     };
@@ -43,6 +46,10 @@ module.exports = function (service, features) {
 
     /* method to support deprecated route */
     const categoriesCategoryIdsGetOld = async function categoriesCategoryIdsGetOld(req, res) {
+        // Remove first element if it is "ids" as this is caused by the legacy route matching
+        if (req.params.categoryIds) {
+            req.params.categoryIds = req.params.categoryIds.replace(/^ids,?/,'');
+        }
         await categoriesCategoryIdsGet(req, res);
     };
 
@@ -51,7 +58,7 @@ module.exports = function (service, features) {
             categoryTreeHead(req, res);
         } else {
             try {
-                const { parentId, lang } = req.query;
+                const { parentId, lang } = extractParameters(req.query);
                 const response = await service.categoryTreeGet(parentId, lang);
                 if (response.categorytree) {
                     utils.writeJson(res, response.categorytree);
@@ -59,13 +66,12 @@ module.exports = function (service, features) {
                     utils.writeJson(res, response);
                 }
             } catch (err) {
-                utils.writeJson(res, err);
+                handleError(res, err);
             }
         }
     };
 
     const categoryTreeHead = function categoryTreeHead(req, res) {
-        console.log('HEAD');
         if (features.categoryTree) {
             res.sendStatus(200);
         } else {

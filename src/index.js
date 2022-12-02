@@ -7,6 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const { createApi } = require('./routerUtils');
 const { getConfig } = require('./config');
 const { createLogger } = require('./utils/logger');
+const { getNumber, getString, getObject } = require('./utils/parameterExtractor');
 const yaml = require('js-yaml');
 
 const BridgeCore = async (config) => {
@@ -75,5 +76,8 @@ const BridgeCore = async (config) => {
 
 module.exports = {
     BridgeCore,
-    createLogger
+    createLogger,
+    getNumber,
+    getString,
+    getObject
 };

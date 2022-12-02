@@ -1,39 +1,41 @@
 'use strict';
 
-const utils = require('../../src/utils/writer.js');
+const { handleError } = require('../utils/errorUtils');
+const { extractParameters, getString, getObject, getNumber } = require('../utils/parameterExtractor');
+const { writeJson } = require('../utils/writer');
 
 module.exports = function (service, features) {
     const contentPagesContentIdDelete = async function contentPagesContentIdDelete(req, res) {
         try {
-            const { contentId } = req.params;
-            const { lang } = req.query;
-            const response = await service.contentPagesContentIdDelete(contentId, lang);
-            utils.writeJson(res, response);
+            const { contentId } = extractParameters(req.params);
+            const { lang } = extractParameters(req.query);
+            const response = await service.contentPagesContentIdDelete(getString(contentId, 'contentId'), lang);
+            writeJson(res, response);
         } catch (err) {
-            utils.writeJson(res, err);
+            handleError(res, err);
         }
     };
 
     const contentPagesContentIdPut = async function contentPagesContentIdPut(req, res) {
         try {
-            const { contentId } = req.params;
-            const { lang } = req.query;
+            const { contentId } = extractParameters(req.params);
+            const { lang } = extractParameters(req.query);
             const { body } = req;
-            const response = await service.contentPagesContentIdPut(body, lang, contentId);
-            utils.writeJson(res, response);
+            const response = await service.contentPagesContentIdPut(getObject(body, 'body'), lang, getString(contentId, 'contentId'));
+            writeJson(res, response);
         } catch (err) {
-            utils.writeJson(res, err);
+            handleError(res, err);
         }
     };
 
     const contentPagesContentIdsGet = async function contentPagesContentIdsGet(req, res) {
         try {
-            const contentIds = req.params['contentIds'].split(',');
-            const { lang } = req.query;
+            const contentIds = getString(req.params['contentIds'], 'contentIds').split(',');
+            const { lang } = extractParameters(req.query);
             const response = await service.contentPagesContentIdsGet(contentIds, lang);
-            utils.writeJson(res, response.contentPages);
+            writeJson(res, response.contentPages);
         } catch (err) {
-            utils.writeJson(res, err);
+            handleError(res, err);
         }
     };
 
@@ -42,12 +44,13 @@ module.exports = function (service, features) {
             contentPagesHead(req, res);
         } else {
             try {
-                const { q, lang, page } = req.query;
+                let { q, lang, page } = extractParameters(req.query);
+                page = page && getNumber(page, 'page');
                 const response = await service.contentPagesGet(q, lang, page);
                 res.set({ 'X-Total': response.total, 'X-HasNext': response.hasNext });
-                utils.writeJson(res, response.contentPages);
+                writeJson(res, response.contentPages);
             } catch (err) {
-                utils.writeJson(res, err);
+                handleError(res, err);
             }
         }
     };
@@ -62,12 +65,12 @@ module.exports = function (service, features) {
 
     const contentPagesPost = async function contentPagesPost(req, res) {
         try {
-            const { lang } = req.query;
+            const { lang } = extractParameters(req.query);
             const { body } = req;
-            const response = await service.contentPagesPost(body, lang);
-            utils.writeJson(res, response);
+            const response = await service.contentPagesPost(getObject(body, 'body'), lang);
+            writeJson(res, response);
         } catch (err) {
-            utils.writeJson(res, err);
+            handleError(res, err);
         }
     };
 

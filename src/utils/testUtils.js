@@ -1,4 +1,4 @@
-module.exports.generateAppMock = () => {
+const generateAppMock = () => {
     return {
         get: jest.fn(),
         post: jest.fn(),
@@ -8,7 +8,7 @@ module.exports.generateAppMock = () => {
     };
 };
 
-module.exports.generateResponseMock = () => {
+const generateResponseMock = () => {
     const resMock = {
         end: jest.fn()
     };
@@ -17,14 +17,22 @@ module.exports.generateResponseMock = () => {
     resMock.json = jest.fn().mockReturnValue(resMock);
     resMock.send = jest.fn().mockReturnValue(resMock);
     resMock.sendStatus = jest.fn().mockReturnValue(resMock);
+    resMock.writeHead = jest.fn().mockReturnValue(resMock);
     return resMock;
 };
 
-module.exports.generateRequestMock = () => {
-    const reqMock = {
+const generateRequestMock = () => {
+    return {
         params: {},
         query: {},
-        body: ''
+        body: '',
+        method: 'GET'
     };
-    return reqMock;
 };
+
+module.exports = {
+    generateAppMock,
+    generateResponseMock,
+    generateRequestMock
+};
+

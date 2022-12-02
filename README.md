@@ -99,6 +99,60 @@ If a method is noted to return `{ }`, the return value will be written as is.
 - `async productsProductIdsGet(productIds, lang)`
     - -> `{ products: [] }`
 
+## Logging
+For logging a `createLogger(logLevel)` function is provided.
+The Logger in turn provides several methods corresponding with the Log Levels,
+such that it will only Log the input when an appropriate LogLevel is used.
+
+Please note that the LogLevel can also be passed to the Config when creating the Express server.
+This Log Level determines which http status codes are logged by the express server.
+
+The possible Loglevels, their corresponding methods and the status codes that are logged are listed below.
+
+|Value|Description|method|status code|
+|-------|-------|-------|-------|
+|DEBUG|enables all logging outputs |logDebug()|all|
+|INFO|enables logging outputs of level Info and below|logInfo()| <=100
+|WARNING|enables logging outputs of level Warning and below|logWarning()|<=300
+|ERROR|enables logging outputs of level Error and below|logError()|<=400
+|NONE|disables all Logging Outputs| |none
+
+## Error Handling
+This Library Handles errors by catching the errors thrown by the Services and returning them to the User inside of the Response.
+An error should ideally include some sort of detailed message and a status code to convey the problem that caused this error more clearly.
+A Thrown error should have look as follows:
+```js
+// the error Object
+const error = {
+  data: 'Details about the error (could also be an object i.E the Error response of the Server',
+  status: 404 // the error code to be returned by the commons 
+} 
+
+// throwing of error
+// as a simple error throw
+throw error;
+// as promise rejection
+Promise.reject(error);
+```
+## Parameter validation
+### Required parameters
+Some API endpoints require that certain parameters are existent (e.g. at least one ID when using the /ids/ endpoints).
+If one if these required parameters is missing, the server will respond with a `HTTP 400` error and a message describing what is missing.
+
+### Manually validating specific parameters
+Because not all shop systems are the same, we cannot determine the required type of certain parameters (e.g. the IDs of categories).
+Therefore the validation of these parameters has to happen inside the service implementations.
+To allow a unified behavior in case of an invalid parameter, this module offers functions to parse the values and automatically respond with an `HTTP 400` error in case of an invalid input.
+
+```js
+const { getNumber } = require('fcecom-bridge-commons');
+
+const categoriesGet = async (parentId, lang, page = 1) => {
+    // Will throw a ParameterValidationError that is handled inside this module if "parentId" is not a numeric string
+    parentId = parentId && getNumber(parentId, 'parentId');
+}
+```
+
 ## Legal Notices
 The Connect for Commerce Bridge Commons module is a product of [Crownpeak Technology GmbH](https://www.crownpeak.com), Dortmund, Germany. The Connect for Commerce Bridge Commons module is subject to the Apache-2.0 license.
 

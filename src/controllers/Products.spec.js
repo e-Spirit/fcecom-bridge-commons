@@ -2,7 +2,10 @@ const { generateRequestMock, generateResponseMock } = require('../../src/utils/t
 const Products = require('../../src/controllers/Products');
 const writer = require('../../src/utils/writer');
 
-jest.mock('../../src/utils/writer.js');
+jest.mock('../../src/utils/writer.js', () => ({
+    respondWithCode: (code, payload) => ({ code, payload }),
+    writeJson: jest.fn()
+}));
 
 describe('Products', () => {
     const service = {
@@ -43,6 +46,24 @@ describe('Products', () => {
             expect(service.productsGet.mock.calls[0][3]).toEqual(testPage);
             expect(writer.writeJson).toHaveBeenCalledTimes(1);
         });
+        it('returns error on invalid page', async () => {
+            const resMock = generateResponseMock();
+            const reqMock = generateRequestMock();
+
+            const testCategoryId = 'slide-stems-touch';
+            const testQuery = 'touch';
+            const testPage = 'INVALIDPAGE';
+            reqMock.query = {
+                categoryId: testCategoryId,
+                q: testQuery,
+                lang: testLang,
+                page: testPage
+            };
+            await controller.productsGet(reqMock, resMock);
+
+            expect(service.productsGet.mock.calls.length).toBe(0);
+            expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({ code: 400, payload: {error: '"page" is not a number'}}));
+        });
     });
     describe('productsProductIdsGet', () => {
         it('calls productsProductIdsGet method from service', async () => {
@@ -67,6 +88,36 @@ describe('Products', () => {
             expect(service.productsProductIdsGet.mock.calls[0][0]).toEqual(testProducts);
             expect(service.productsProductIdsGet.mock.calls[0][1]).toEqual(testLang);
             expect(writer.writeJson).toHaveBeenCalledTimes(1);
+        });
+        it('writes an error for missing product ids', async () => {
+            const resMock = generateResponseMock();
+            const reqMock = generateRequestMock();
+
+            const testLang = 'en';
+            reqMock.query = {
+                lang: testLang
+            };
+            reqMock.params = {
+                productIds: ''
+            };
+
+            await controller.productsProductIdsGet(reqMock, resMock);
+
+            expect(service.productsProductIdsGet.mock.calls.length).toBe(0);
+            expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
+                code: 400,
+                payload: { error: '\"productIds\" is an empty string' }
+            }));
+        });
+        it('handles HEAD requests', async () => {
+            const resMock = generateResponseMock();
+            const reqMock = generateRequestMock();
+            reqMock.method = 'HEAD';
+
+            await controller.productsProductIdsGet(reqMock, resMock);
+
+            expect(service.productsProductIdsGet.mock.calls.length).toBe(0);
+            expect(resMock.sendStatus).toBeCalledWith(200);
         });
     });
     describe('productsProductIdsGetOld (deprecated)', () => {
