@@ -18,7 +18,7 @@ const BridgeCore = async (config) => {
         console.log('created route', method, routePath, handlers);
     };
 
-    // Configure oas3-tools
+    // Configure swagger-routes-express
     const options = {
         security: {
             basicAuth: (request, response, next) => {
