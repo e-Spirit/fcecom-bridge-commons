@@ -1,13 +1,12 @@
+const { ParameterValidationError } = require('./errors');
 /**
  * Returns whether the given value is considered empty.
  *
  * @param value
- * @return {*} 
+ * @return {*}
  */
-const isEmpty = function(value) {
-  return typeof value === 'undefined'
-    || value === null
-    || (typeof value === 'string' && value.trim().length === 0);
+const isEmpty = function (value) {
+    return typeof value === 'undefined' || value === null || (typeof value === 'string' && value.trim().length === 0);
 };
 
 /**
@@ -35,11 +34,12 @@ const extractParameters = function (obj) {
  * @param [label='value'] Label to assign to the error being thrown.
  * @return {*} The parsed value.
  */
-const getNumber = function(value, label = 'value') {
+const getNumber = function (value, label = 'value') {
     if (typeof value === 'number') {
         return value;
     }
-    if (typeof value !== 'string') { // If it is not a string it will not be parse-able
+    if (typeof value !== 'string') {
+        // If it is not a string it will not be parse-able
         throw new ParameterValidationError(`"${label}" is not a number`);
     }
     const result = parseInt(value, 10);
@@ -57,7 +57,7 @@ const getNumber = function(value, label = 'value') {
  * @param [label='value'] Label to assign to the error being thrown.
  * @return {*} The parsed value.
  */
- const getString = function(value, label = 'value') {
+const getString = function (value, label = 'value') {
     if (typeof value !== 'string') {
         throw new ParameterValidationError(`"${label}" is not a string`);
     }
@@ -75,7 +75,7 @@ const getNumber = function(value, label = 'value') {
  * @param [label='value'] Label to assign to the error being thrown.
  * @return {*} The parsed value.
  */
- const getObject = function(value, label = 'value') {
+const getObject = function (value, label = 'value') {
     if (typeof value !== 'object') {
         throw new ParameterValidationError(`"${label}" is not an object`);
     }
@@ -85,22 +85,9 @@ const getNumber = function(value, label = 'value') {
     return value;
 };
 
-/**
- * Error being thrown by failed parameter validation.
- *
- * @param message
- */
-const ParameterValidationError = function(message) {
-    this.name = 'ParameterValidationError';
-    this.message = message;
-    this.stack = (new Error(message)).stack;
-}
-ParameterValidationError.prototype = new Error;
-
 module.exports = {
     extractParameters,
     getNumber,
     getString,
-    getObject,
-    ParameterValidationError
+    getObject
 };

@@ -9,6 +9,8 @@ const { getConfig } = require('./config');
 const { createLogger } = require('./utils/logger');
 const { getNumber, getString, getObject } = require('./utils/parameterExtractor');
 const yaml = require('js-yaml');
+const { BodyValidationError, ParameterValidationError } = require('./utils/errors');
+const { ErrorCode } = require('./utils/errorUtils');
 
 const BridgeCore = async (config) => {
     config = getConfig(config);
@@ -79,5 +81,8 @@ module.exports = {
     createLogger,
     getNumber,
     getString,
-    getObject
+    getObject,
+    BodyValidationError,
+    ParameterValidationError,
+    ErrorCode
 };

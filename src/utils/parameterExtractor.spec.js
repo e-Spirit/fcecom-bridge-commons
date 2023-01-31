@@ -1,4 +1,5 @@
-const { extractParameters, getNumber, ParameterValidationError, getString, getObject } = require('./parameterExtractor');
+const { extractParameters, getNumber, getString, getObject } = require('./parameterExtractor');
+const { ParameterValidationError } = require('./errors');
 
 describe('parameterExtractor', () => {
     describe('extractParameter()', () => {
@@ -90,9 +91,9 @@ describe('parameterExtractor', () => {
     });
     describe('getObject()', () => {
         it('returns an object if given value is a non-empty object', () => {
-            const result = getObject({ a: 'VALUE '});
+            const result = getObject({ a: 'VALUE ' });
 
-            expect(result).toEqual({ a: 'VALUE '});
+            expect(result).toEqual({ a: 'VALUE ' });
         });
         it('throws if given value is undefined', () => {
             expect(() => {

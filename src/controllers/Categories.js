@@ -1,7 +1,7 @@
 'use strict';
 
 const utils = require('../../src/utils/writer.js');
-const { handleError } = require("../utils/errorUtils");
+const { handleError } = require('../utils/errorUtils');
 const { extractParameters, getString, getNumber } = require('../utils/parameterExtractor.js');
 
 module.exports = function (service, features) {
@@ -48,7 +48,7 @@ module.exports = function (service, features) {
     const categoriesCategoryIdsGetOld = async function categoriesCategoryIdsGetOld(req, res) {
         // Remove first element if it is "ids" as this is caused by the legacy route matching
         if (req.params.categoryIds) {
-            req.params.categoryIds = req.params.categoryIds.replace(/^ids,?/,'');
+            req.params.categoryIds = req.params.categoryIds.replace(/^ids,?/, '');
         }
         await categoriesCategoryIdsGet(req, res);
     };
