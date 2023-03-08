@@ -3,9 +3,18 @@
 const utils = require('../../src/utils/writer.js');
 const { handleError } = require('../utils/errorUtils');
 const { extractParameters, getString, getNumber } = require('../utils/parameterExtractor.js');
+const { getLogger, PACKAGE_NAME } = require('../utils/logger');
 
 module.exports = function (service, features) {
+    const logger = getLogger();
+    const LOGGING_NAME = 'Categories';
+
     const categoriesGet = async function categoriesGet(req, res) {
+        logger.logDebug(
+            PACKAGE_NAME,
+            LOGGING_NAME,
+            `Received ${req.method} request on /categories with parameters ${JSON.stringify({ ...req.query })}`
+        );
         try {
             let { parentId, lang, page } = extractParameters(req.query);
             page = page && getNumber(page, 'page');
@@ -25,6 +34,11 @@ module.exports = function (service, features) {
         if (req.method === 'HEAD') {
             categoriesCategoryIdsHead(req, res);
         } else {
+            logger.logDebug(
+                PACKAGE_NAME,
+                LOGGING_NAME,
+                `Received ${req.method} request on /categories/ids with parameters ${JSON.stringify({ ...req.query, ...req.params })}`
+            );
             try {
                 const { lang } = extractParameters(req.query);
                 const categoryIds = getString(req.params['categoryIds'], 'categoryIds').split(',');
@@ -41,6 +55,7 @@ module.exports = function (service, features) {
     };
 
     const categoriesCategoryIdsHead = async function categoriesCategoryIdsHead(req, res) {
+        logger.logDebug(PACKAGE_NAME, LOGGING_NAME, `Received ${req.method} request on /categories/ids`);
         res.sendStatus(200);
     };
 
@@ -57,6 +72,11 @@ module.exports = function (service, features) {
         if (req.method === 'HEAD') {
             categoryTreeHead(req, res);
         } else {
+            logger.logDebug(
+                PACKAGE_NAME,
+                LOGGING_NAME,
+                `Received ${req.method} request on /categories/tree with parameters ${JSON.stringify({ ...req.query })}`
+            );
             try {
                 const { parentId, lang } = extractParameters(req.query);
                 const response = await service.categoryTreeGet(parentId, lang);
@@ -72,6 +92,7 @@ module.exports = function (service, features) {
     };
 
     const categoryTreeHead = function categoryTreeHead(req, res) {
+        logger.logDebug(PACKAGE_NAME, LOGGING_NAME, `Received ${req.method} request on /categories/tree`);
         if (features.categoryTree) {
             res.sendStatus(200);
         } else {

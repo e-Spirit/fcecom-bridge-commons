@@ -6,18 +6,22 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const { createApi } = require('./routerUtils');
 const { getConfig } = require('./config');
-const { createLogger } = require('./utils/logger');
+const { PACKAGE_NAME, createLogger, getLogger } = require('./utils/logger');
 const { getNumber, getString, getObject } = require('./utils/parameterExtractor');
 const yaml = require('js-yaml');
 const { BodyValidationError, ParameterValidationError } = require('./utils/errors');
 const { ErrorCode } = require('./utils/errorUtils');
 
+const LOGGING_NAME = 'BridgeCore';
+
 const BridgeCore = async (config) => {
     config = getConfig(config);
 
+    const logger = createLogger(config.logLevel);
+
     const onCreateRoute = (method, descriptor) => {
-        const [routePath, ...handlers] = descriptor;
-        console.log('created route', method, routePath, handlers);
+        const [routePath] = descriptor;
+        logger.logDebug(PACKAGE_NAME, LOGGING_NAME, `Created route ${method.toUpperCase()} ${routePath}`);
     };
 
     // Configure swagger-routes-express
@@ -57,13 +61,21 @@ const BridgeCore = async (config) => {
                 app
             )
             .listen(config.port, () => {
-                console.log('Your server is listening on port %d (https://localhost:%d)', config.port, config.port);
-                console.log('Swagger-ui is available on https://localhost:%d/docs', config.port);
+                logger.logInfo(
+                    PACKAGE_NAME,
+                    LOGGING_NAME,
+                    `Your server is listening on port ${config.port} (https://localhost:${config.port})`
+                );
+                logger.logInfo(PACKAGE_NAME, LOGGING_NAME, `Swagger-ui is available on https://localhost:${config.port}/docs`);
             });
     } else {
         app.listen(config.port, () => {
-            console.log('Your server is listening on port %d (http://localhost:%d)', config.port, config.port);
-            console.log('Swagger-ui is available on http://localhost:%d/docs', config.port);
+            logger.logInfo(
+                PACKAGE_NAME,
+                LOGGING_NAME,
+                `Your server is listening on port ${config.port} (https://localhost:${config.port})`
+            );
+            logger.logInfo(PACKAGE_NAME, LOGGING_NAME, `Swagger-ui is available on https://localhost:${config.port}/docs`);
         });
     }
 
@@ -79,6 +91,7 @@ const BridgeCore = async (config) => {
 module.exports = {
     BridgeCore,
     createLogger,
+    getLogger,
     getNumber,
     getString,
     getObject,

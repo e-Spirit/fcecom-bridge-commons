@@ -1,7 +1,12 @@
+const { PACKAGE_NAME, getLogger } = require('./logger');
 const { respondWithCode, writeJson } = require('../utils/writer');
 const { ParameterValidationError, BodyValidationError } = require('./errors');
 
+
+const LOGGING_NAME = 'errorUtils';
+
 const handleError = (response, err) => {
+    const logger = getLogger();
     if (err instanceof ParameterValidationError) {
         const message = err.message || 'Invalid request';
         const errorResponse = respondWithCode(400, { error: message });
@@ -15,11 +20,18 @@ const handleError = (response, err) => {
         let error = err;
         if (!error.status && !error.data) {
             /* case error is in code and has nothing to do with http calls */
-            error = { status: 500, data: error.toString() };
+            error = { status: 500, data: { error: 'Unknown error occured' } };
         }
         const errorResponse = respondWithCode(error.status, error.data);
         writeJson(response, errorResponse);
     }
+    logger.logError(
+        PACKAGE_NAME,
+        LOGGING_NAME,
+        `An error occured`,
+        err
+    );
+
 };
 
 const ErrorCode = {
