@@ -29,7 +29,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 2.2.0
+  version: 2.2.1
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png

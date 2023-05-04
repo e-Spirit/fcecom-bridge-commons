@@ -1,4 +1,4 @@
-# Connect for Commerce Bridge Commons module
+# Connect for Commerce Bridge Commons Module
 
 This module contains the common parts required by a Connect for Commerce bridge.
 All that needs to be provided in addition is the shop-specific implementation in the so called services.
@@ -20,6 +20,7 @@ const bridge = BridgeCore({
   password: 'password123',
   servicesDir: path.join(process.cwd(), './src/service'),
   port: 3000,
+  logLevel: 'INFO',
   features: {
     contentPages: true,
     categoryTree: true
@@ -39,11 +40,12 @@ const app = bridge.getAppInstance();
 
 ## Configuration
 |Property|Description|Required|Default|
-|-|-|-|-|
+|-------|-------|-------|-------|
 |username|The username to use for Basic authentication against the bridge.|Yes||
 |password|The password to use for Basic authenticaiton against the bridge.|Yes||
 |servicesDir|The directory that contains the service implementations (absolute).|Yes||
 |port|The port to start the bridge on.|No|3000|
+|logLevel|The Log Level for request logging (for possible values see Logging chapter)|No|INFO|
 |features|List of optional features that the bridge supports. See below.|No| All disabled
 |useSsl|Whether to start the server using the HTTPS protocol.|No|false
 |sslCert|Path to the certificate file to use when SSL is active.|If `useSsl` is `true`||
@@ -53,10 +55,10 @@ const app = bridge.getAppInstance();
 ## Features
 The bridges may or may not support the following features. If the feature is supported, the corresponding HEAD request will return a success. Otherwise it will return an error.
 
-By default all optional features are assumed to be not supported.
+By default, all optional features are assumed to be not supported.
 
 |Feature name|Description|
-|-|-|
+|--------|--------|
 |contentPages|The bridge can display content pages and may be able to create, update and delete them.|
 |categoryTree|The bridge is able to provide the categories as a nested tree.|
 
@@ -101,11 +103,11 @@ If a method is noted to return `{ }`, the return value will be written as is.
 
 ## Logging
 For logging a `createLogger(logLevel)` function is provided.
-The Logger in turn provides several methods corresponding with the Log Levels,
+The Logger in turn provides several methods corresponding with the log levels, 
 such that it will only Log the input when an appropriate LogLevel is used.
 
-Please note that the LogLevel can also be passed to the Config when creating the Express server.
-This Log Level determines which http status codes are logged by the express server.
+Please note that the LogLevel can also be passed to the config when creating the Express server.
+This log level determines which http status codes are logged by the express server.
 
 The possible Loglevels, their corresponding methods and the status codes that are logged are listed below.
 
@@ -118,11 +120,11 @@ The possible Loglevels, their corresponding methods and the status codes that ar
 |NONE|disables all Logging Outputs| |none
 
 ## Error Handling
-This Library Handles errors by catching the errors thrown by the Services and returning them to the User inside of the Response.
+This library handles errors by catching the errors thrown by the services and returning them to the user inside of the response.
 An error should ideally include some sort of detailed message and a status code to convey the problem that caused this error more clearly.
-A Thrown error should have look as follows:
+A thrown error should look like the following:
 ```js
-// the error Object
+// the error object
 const error = {
   data: 'Details about the error (could also be an object i.E the Error response of the Server',
   status: 404 // the error code to be returned by the commons 
@@ -134,6 +136,7 @@ throw error;
 // as promise rejection
 Promise.reject(error);
 ```
+
 ## Parameter validation
 ### Required parameters
 Some API endpoints require that certain parameters are existent (e.g. at least one ID when using the /ids/ endpoints).
@@ -153,8 +156,51 @@ const categoriesGet = async (parentId, lang, page = 1) => {
 }
 ```
 
+## Error handling POST/PUT
+As every shop system provides different error messages for invalid request bodies when creating or updating a page, the errors must be unified in a way the First Spirit Connect for Commerce Module can understand.
+### Unified Error Object
+The First Spirit Connect for Commerce Module can understand the following response body:
+
+```json
+{
+  "error": [
+    {
+      "field": "<field-name>",
+      "cause": "<error-cause>",
+      "code": "<error-code>"
+    }
+  ]
+}
+```
+
+### Error Codes
+This module provides error codes which the FirstSpirit Module can understand.
+Please determine which code is suitable for the error and pass it as described in the following example.
+The error codes can be imported as follows:
+```js
+const { ErrorCode } = require('fcecom-bridge-commons');
+```
+
+### BodyValidationError
+This module provides the BodyValidationError which accepts an array of errors as error cause. The handler of this error makes the bridge respond with a `HTTP 400` error and a response body as described above.
+
+Example to use:
+```js
+throw new BodyValidationError('Invalid field in body', {
+            cause: [
+                {
+                    field: '<field-name>',
+                    cause: '<error-cause>',
+                    code: "<error-code>"
+                }
+            ]
+        });
+```
+
 ## Legal Notices
 The Connect for Commerce Bridge Commons module is a product of [Crownpeak Technology GmbH](https://www.crownpeak.com), Dortmund, Germany. The Connect for Commerce Bridge Commons module is subject to the Apache-2.0 license.
+
+Details regarding any third-party software products in use but not created by Crownpeak Technology GmbH, as well as the third-party licenses and, if applicable, update information can be found in the file THIRD-PARTY.txt.
 
 ## Disclaimer
 This document is provided for information purposes only. Crownpeak may change the contents hereof without notice. This document is not warranted to be error-free, nor subject to any other warranties or conditions, whether expressed orally or implied in law, including implied warranties and conditions of merchantability or fitness for a particular purpose. Crownpeak specifically disclaims any liability with respect to this document and no contractual obligations are formed either directly or indirectly by this document. The technologies, functionality, services, and processes described herein are subject to change without notice.
