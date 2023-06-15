@@ -24,12 +24,20 @@ info:
     \          | The request failed due to invalid or missing authentication credentials.\
     \   |\n|      404          | The requested resource doesn't exist.           \
     \                           |\n|      500          | The request failed due to\
-    \ an internal server error.                        |\n"
+    \ an internal server error.                        |\n\n# Legal Notices\n\nThe\
+    \ Connect for Commerce Bridge API is a product of [Crownpeak Technology GmbH](https://www.crownpeak.com),\
+    \ Dortmund, Germany. The Connect for Commerce Bridge API is subject to the Apache-2.0\
+    \ license.\n\n## Third-Party Software Products\n\n| Software        | License\
+    \                                                                           |\n\
+    |-----------------|-----------------------------------------------------------------------------------|\n\
+    |    ReDoc        | [MIT License](https://github.com/Redocly/redoc/blob/main/LICENSE)\
+    \                 |\n|    Montserrat   | [Open Font License](https://github.com/JulietaUla/Montserrat/blob/master/OFL.txt)\
+    \ |\n"
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 2.2.1
+  version: 2.2.2
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png
@@ -52,9 +60,10 @@ tags:
     \ remain functional for six months. A migration guide will be provided with the\
     \ replacement implementation.\n"
     name: ContentPages
-  - description: The Mapping endpoint provides the mapping between the Bridge API endpoints
-      and any given commerce interface. It is possible to build or deconstruct a storefront
-      url either for the storefront itself or for FirstSpirit.
+  - description: The Mapping endpoint provides the mapping between a page in FirstSpirit
+      and a page in the shop system. It is used to either construct a Storefront URL
+      based on given identifier properties in FirstSpirit or deconstruct a given Storefront
+      URL to return an identifier. This identifier is used to identify the page in FirstSpirit.
     name: Mapping
   - description: The Products endpoint fetches product information from any given shop
       backend which can be displayed in the product report inside the FirstSpirit ContentCreator.
@@ -568,7 +577,7 @@ paths:
         - ContentPages
   /lookup-url:
     get:
-      description: Returns an Identifier for a given Storefront URL which is used
+      description: Returns an identifier for a given Storefront URL which is used
         in FirstSpirit to identify the page.
       operationId: lookupUrlGet
       parameters:
@@ -586,7 +595,7 @@ paths:
                   description: Product Page
               schema:
                 $ref: '#/components/schemas/IdentifierObject'
-          description: Identifier Object or `null` if not exists
+          description: Identifier Object or `null` if it does not exist.
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
@@ -724,12 +733,12 @@ paths:
                 Product Storefront Url:
                   $ref: '#/components/examples/StorefrontUrl'
                   description: Product Storefront Url
-                URL not found in Storefront:
+                URL was not found in Storefront:
                   $ref: '#/components/examples/UrlNotFound'
-                  description: URL not found in Storefront
+                  description: URL was not found in Storefront
               schema:
                 $ref: '#/components/schemas/StorefrontUrl'
-          description: A Storefront URL or `null` if not exists
+          description: A Storefront URL or `null` if it does not exist.
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
