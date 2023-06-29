@@ -1,7 +1,6 @@
 const { PACKAGE_NAME, getLogger } = require('./logger');
 const { respondWithCode, writeJson } = require('../utils/writer');
-const { ParameterValidationError, BodyValidationError } = require('./errors');
-
+const { ParameterValidationError, BodyValidationError, ShopError } = require('./errors');
 
 const LOGGING_NAME = 'errorUtils';
 
@@ -16,6 +15,11 @@ const handleError = (response, err) => {
         const cause = err.cause;
         const errorResponse = respondWithCode(400, { error: cause ?? message });
         writeJson(response, errorResponse);
+    } else if (err instanceof ShopError) {
+        const message = err.message || 'An error occured';
+        const cause = err.cause;
+        const errorResponse = respondWithCode(500, { error: cause ?? message });
+        writeJson(response, errorResponse);
     } else {
         let error = err;
         if (!error.status && !error.data) {
@@ -25,13 +29,7 @@ const handleError = (response, err) => {
         const errorResponse = respondWithCode(error.status, error.data);
         writeJson(response, errorResponse);
     }
-    logger.logError(
-        PACKAGE_NAME,
-        LOGGING_NAME,
-        `An error occured`,
-        err
-    );
-
+    logger.logError(PACKAGE_NAME, LOGGING_NAME, `An error occured`, err);
 };
 
 const ErrorCode = {

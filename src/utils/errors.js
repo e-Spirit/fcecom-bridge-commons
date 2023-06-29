@@ -24,7 +24,21 @@ const BodyValidationError = function (message, options) {
 };
 BodyValidationError.prototype = new Error();
 
+/**
+ * Error to be thrown when the shop returned an error.
+ *
+ * @param message
+ * @param options { cause: mappedErrors }
+ */
+const ShopError = function (message) {
+    this.name = 'ShopError';
+    this.message = message;
+    this.stack = new Error(message).stack;
+};
+ShopError.prototype = new Error();
+
 module.exports = {
     ParameterValidationError,
-    BodyValidationError
+    BodyValidationError,
+    ShopError
 };

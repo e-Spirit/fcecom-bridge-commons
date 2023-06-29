@@ -197,6 +197,9 @@ throw new BodyValidationError('Invalid field in body', {
         });
 ```
 
+### ShopError
+In case the shop returns an error or shows unexpected behavior, the bridge should throw a `ShopError` in order to properly handle the error within the module.
+
 ## Legal Notices
 The Connect for Commerce Bridge Commons module is a product of [Crownpeak Technology GmbH](https://www.crownpeak.com), Dortmund, Germany. The Connect for Commerce Bridge Commons module is subject to the Apache-2.0 license.
 

@@ -9,7 +9,7 @@ const { getConfig } = require('./config');
 const { PACKAGE_NAME, createLogger, getLogger } = require('./utils/logger');
 const { getNumber, getString, getObject } = require('./utils/parameterExtractor');
 const yaml = require('js-yaml');
-const { BodyValidationError, ParameterValidationError } = require('./utils/errors');
+const { BodyValidationError, ParameterValidationError, ShopError } = require('./utils/errors');
 const { ErrorCode } = require('./utils/errorUtils');
 
 const LOGGING_NAME = 'BridgeCore';
@@ -97,5 +97,6 @@ module.exports = {
     getObject,
     BodyValidationError,
     ParameterValidationError,
+    ShopError,
     ErrorCode
 };
