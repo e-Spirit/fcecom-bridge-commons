@@ -37,39 +37,33 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 2.2.2
+  version: 3.0.0
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png
 servers:
-  - url: /api
+- url: /api
 security:
-  - basicAuth: []
+- basicAuth: []
 tags:
-  - description: The Categories endpoint fetches all available categories from any given
-      shop backend which can be displayed in the category report inside the FirstSpirit
-      ContentCreator. It is not intended to process all available category information
-      from the shop backend.
-    name: Categories
-  - description: "The contentpages endpoint fetches existing content pages from any\
-    \ given shop backend.\nExisting content pages like the Homepage as well as custom\
-    \ FirstSpirit-driven pages can be displayed in the content report inside the FirstSpirit\
-    \ ContentCreator.\n\n### Deprecation Notice\nThe ContentPages endpoint will soon\
-    \ be deprecated. The endpoint will be replaced with similar functionality. With\
-    \ the release of the replacement implementation, the existing implementation will\
-    \ remain functional for six months. A migration guide will be provided with the\
-    \ replacement implementation.\n"
-    name: ContentPages
-  - description: The Mapping endpoint provides the mapping between a page in FirstSpirit
-      and a page in the shop system. It is used to either construct a Storefront URL
-      based on given identifier properties in FirstSpirit or deconstruct a given Storefront
-      URL to return an identifier. This identifier is used to identify the page in FirstSpirit.
-    name: Mapping
-  - description: The Products endpoint fetches product information from any given shop
-      backend which can be displayed in the product report inside the FirstSpirit ContentCreator.
-      It is not intended to provide all available product information from the shop
-      backend.
-    name: Products
+- description: The Categories endpoint fetches all available categories from any given
+    shop backend which can be displayed in the category report inside the FirstSpirit
+    ContentCreator. It is not intended to process all available category information
+    from the shop backend.
+  name: Categories
+- description: |
+    The Content endpoint fetches all available content pages from any given shop backend which can be displayed in the content report inside the FirstSpirit ContentCreator.
+  name: Content
+- description: The Mapping endpoint provides the mapping between a page in FirstSpirit
+    and a page in the shop system. It is used to either construct a Storefront URL
+    based on given identifier properties in FirstSpirit or deconstruct a given Storefront
+    URL to return an identifier. This identifier is used to identify the page in FirstSpirit.
+  name: Mapping
+- description: The Products endpoint fetches product information from any given shop
+    backend which can be displayed in the product report inside the FirstSpirit ContentCreator.
+    It is not intended to provide all available product information from the shop
+    backend.
+  name: Products
 paths:
   /categories:
     get:
@@ -78,14 +72,14 @@ paths:
         \ or none was set, it displays all categories in the master language by default."
       operationId: categoriesGet
       parameters:
-        - description: Filter by parentId. It returns all related categories and subcategories
-            from the category tree.
-          in: query
-          name: parentId
-          schema:
-            type: string
-        - $ref: '#/components/parameters/lang'
-        - $ref: '#/components/parameters/page'
+      - description: Filter by parentId. It returns all related categories and subcategories
+          from the category tree.
+        in: query
+        name: parentId
+        schema:
+          type: string
+      - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/page'
       responses:
         "200":
           content:
@@ -109,10 +103,10 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get Categories
       tags:
-        - Categories
+      - Categories
   /categories/ids:
     head:
       description: "Checks if the [new Category endpoint](#/Categories/categoriesCategoryIdsGet)\
@@ -124,18 +118,18 @@ paths:
         "404":
           description: New Category endpoint doesn't exist.
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Support new Category endpoint
       tags:
-        - Categories
+      - Categories
   /categories/ids/{categoryIds}:
     get:
       description: Returns a list of categories from the shop backend that match the
         given categoryIds.
       operationId: categoriesCategoryIdsGet
       parameters:
-        - $ref: '#/components/parameters/categoryIds'
-        - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/categoryIds'
+      - $ref: '#/components/parameters/lang'
       responses:
         "200":
           content:
@@ -152,10 +146,10 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get list of Categories by their IDs.
       tags:
-        - Categories
+      - Categories
   /categories/tree:
     get:
       description: "Returns the category tree in the specified language.\n\nIf the\
@@ -163,12 +157,12 @@ paths:
         \ all categories in the master language by default."
       operationId: categoryTreeGet
       parameters:
-        - description: Filter by parentId
-          in: query
-          name: parentId
-          schema:
-            type: string
-        - $ref: '#/components/parameters/lang'
+      - description: Filter by parentId
+        in: query
+        name: parentId
+        schema:
+          type: string
+      - $ref: '#/components/parameters/lang'
       responses:
         "200":
           content:
@@ -185,10 +179,10 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get Category Tree
       tags:
-        - Categories
+      - Categories
     head:
       description: "Checks if the category tree endpoint is available. It is activated\
         \ by default.\n\nIf it is not available, the dropdown for the category tree\
@@ -201,10 +195,10 @@ paths:
         "404":
           description: Category tree endpoint doesn't exist
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Support Category Tree
       tags:
-        - Categories
+      - Categories
   /categories/{categoryIds}:
     get:
       deprecated: true
@@ -213,8 +207,8 @@ paths:
         \ categoryIds."
       operationId: categoriesCategoryIdsGetOld
       parameters:
-        - $ref: '#/components/parameters/categoryIds'
-        - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/categoryIds'
+      - $ref: '#/components/parameters/lang'
       responses:
         "200":
           content:
@@ -231,19 +225,19 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get list of Categories by their IDs.
       tags:
-        - Categories
+      - Categories
   /content:
     get:
       description: Returns a pageable list of Content Pages which can be filtered
         using the query parameters listed below.
       operationId: contentGet
       parameters:
-        - $ref: '#/components/parameters/query'
-        - $ref: '#/components/parameters/lang'
-        - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/query'
+      - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/page'
       responses:
         "200":
           content:
@@ -267,10 +261,10 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get a list of Content Pages
       tags:
-        - Content
+      - Content
     head:
       description: |-
         Checks if the Content Report exists in the FirstSpirit module.
@@ -283,10 +277,10 @@ paths:
         "404":
           description: Content Report doesn't exist
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Support Content Report
       tags:
-        - Content
+      - Content
     post:
       description: Create a new Content Page in the storefront and its page reference
         in FirstSpirit.
@@ -317,17 +311,17 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Create Content Page
       tags:
-        - Content
+      - Content
   /content/ids/{contentIds}:
     get:
       description: Returns a list of Content Pages which match the given contentIds.
       operationId: contentContentIdsGet
       parameters:
-        - $ref: '#/components/parameters/contentIds'
-        - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/contentIds'
+      - $ref: '#/components/parameters/lang'
       responses:
         "200":
           content:
@@ -344,43 +338,43 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get list of Content Pages by IDs
       tags:
-        - Content
+      - Content
   /content/{contentId}:
     delete:
       description: Remove a Content Page from the Storefront and its page reference
         in FirstSpirit.
       operationId: contentContentIdDelete
       parameters:
-        - description: Delete content page by contentId
-          in: path
-          name: contentId
-          required: true
-          schema:
-            type: string
+      - description: Delete content page by contentId
+        in: path
+        name: contentId
+        required: true
+        schema:
+          type: string
       responses:
         "204":
           description: Deletion successful
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Delete Content Page
       tags:
-        - Content
+      - Content
     put:
       description: Edit information of a Content Page. Changes are reflected in both
         the storefront and in the page reference in FirstSpirit.
       operationId: contentContentIdPut
       parameters:
-        - description: Update content page by contentId
-          in: path
-          name: contentId
-          required: true
-          schema:
-            type: string
+      - description: Update content page by contentId
+        in: path
+        name: contentId
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -399,189 +393,17 @@ paths:
         "404":
           description: Content Page not found
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Update Content Page
       tags:
-        - Content
-  /contentpages:
-    get:
-      description: Returns a pageable list of Content Pages which can be filtered
-        using the query parameters listed below.
-      operationId: contentPagesGet
-      parameters:
-        - $ref: '#/components/parameters/query'
-        - $ref: '#/components/parameters/lang'
-        - $ref: '#/components/parameters/page'
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                Content Page List:
-                  $ref: '#/components/examples/ContentPageList'
-                  description: Content Page List
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Extracted'
-          description: List of Content Pages
-          headers:
-            X-HasNext:
-              $ref: '#/components/headers/hasNext'
-              style: simple
-            X-Total:
-              $ref: '#/components/headers/total'
-              style: simple
-        "401":
-          $ref: '#/components/responses/UnauthorizedError'
-      security:
-        - basicAuth: []
-      summary: Get a list of Content Pages
-      tags:
-        - ContentPages
-    head:
-      description: |-
-        Checks if the Content Report exists in the FirstSpirit module.
-
-        The Content Report is used to display existing content pages from the shop in FirstSpirit. By default the Content Report is activated.
-      operationId: contentPagesHead
-      responses:
-        "200":
-          description: Content Report exists
-        "404":
-          description: Content Report doesn't exist
-      security:
-        - basicAuth: []
-      summary: Support Content Report
-      tags:
-        - ContentPages
-    post:
-      description: Create a new Content Page in the storefront and its page reference
-        in FirstSpirit.
-      operationId: contentPagesPost
-      parameters:
-        - $ref: '#/components/parameters/lang'
-      requestBody:
-        content:
-          application/json:
-            examples:
-              Content Page:
-                $ref: '#/components/examples/ContentPage'
-                description: Content Page
-            schema:
-              $ref: '#/components/schemas/ContentPage'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                Content Page:
-                  $ref: '#/components/examples/ContentPageResponse'
-                  description: Content Page
-              schema:
-                $ref: '#/components/schemas/IdProviding'
-          description: Identifier Object
-        "400":
-          description: Bad Request. Missing or incorrect parameters
-        "401":
-          $ref: '#/components/responses/UnauthorizedError'
-      security:
-        - basicAuth: []
-      summary: Create Content Page
-      tags:
-        - ContentPages
-  /contentpages/ids/{contentIds}:
-    get:
-      description: Returns a list of Content Pages which match the given contentIds.
-      operationId: contentPagesContentIdsGet
-      parameters:
-        - $ref: '#/components/parameters/contentIds'
-        - $ref: '#/components/parameters/lang'
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                Content Page List:
-                  $ref: '#/components/examples/ContentPageListById'
-                  description: Content Page List
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Extracted'
-          description: List of Content Pages or `null` if it does not exist
-        "401":
-          $ref: '#/components/responses/UnauthorizedError'
-      security:
-        - basicAuth: []
-      summary: Get list of Content Pages by IDs
-      tags:
-        - ContentPages
-  /contentpages/{contentId}:
-    delete:
-      description: Remove a Content Page from the Storefront and its page reference
-        in FirstSpirit.
-      operationId: contentPagesContentIdDelete
-      parameters:
-        - description: Delete content page by contentId
-          in: path
-          name: contentId
-          required: true
-          schema:
-            type: string
-        - $ref: '#/components/parameters/lang'
-      responses:
-        "204":
-          description: Deletion successful
-        "401":
-          $ref: '#/components/responses/UnauthorizedError'
-      security:
-        - basicAuth: []
-      summary: Delete Content Page
-      tags:
-        - ContentPages
-    put:
-      description: Edit information of a Content Page. Changes are reflected in both
-        the storefront and in the page reference in FirstSpirit.
-      operationId: contentPagesContentIdPut
-      parameters:
-        - description: Update content page by contentId
-          in: path
-          name: contentId
-          required: true
-          schema:
-            type: string
-        - $ref: '#/components/parameters/lang'
-      requestBody:
-        content:
-          application/json:
-            examples:
-              Content Page:
-                $ref: '#/components/examples/ContentPage'
-                description: Content Page
-            schema:
-              $ref: '#/components/schemas/ContentPage'
-        required: true
-      responses:
-        "201":
-          description: Update successful
-        "401":
-          $ref: '#/components/responses/UnauthorizedError'
-        "404":
-          description: Content Page not found
-      security:
-        - basicAuth: []
-      summary: Update Content Page
-      tags:
-        - ContentPages
+      - Content
   /lookup-url:
     get:
       description: Returns an identifier for a given Storefront URL which is used
         in FirstSpirit to identify the page.
       operationId: lookupUrlGet
       parameters:
-        - $ref: '#/components/parameters/url'
+      - $ref: '#/components/parameters/url'
       responses:
         "200":
           content:
@@ -599,24 +421,24 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get Storefront URL Identifier
       tags:
-        - Mapping
+      - Mapping
   /products:
     get:
       description: Returns a pageable list of products from the shop backend which
         can be filtered using the query parameters listed below.
       operationId: productsGet
       parameters:
-        - description: Filter by categoryId
-          in: query
-          name: categoryId
-          schema:
-            type: string
-        - $ref: '#/components/parameters/query'
-        - $ref: '#/components/parameters/lang'
-        - $ref: '#/components/parameters/page'
+      - description: Filter by categoryId
+        in: query
+        name: categoryId
+        schema:
+          type: string
+      - $ref: '#/components/parameters/query'
+      - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/page'
       responses:
         "200":
           content:
@@ -640,10 +462,10 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get list of Products
       tags:
-        - Products
+      - Products
   /products/ids:
     head:
       description: "Checks if the [new Product endpoint](#/Products/productsProductIdsGet)\
@@ -655,18 +477,18 @@ paths:
         "404":
           description: New Category endpoint doesn't exist.
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Support new Products endpoint
       tags:
-        - Products
+      - Products
   /products/ids/{productIds}:
     get:
       description: Returns a list of products from the shop backend which match the
         given productIds.
       operationId: productsProductIdsGet
       parameters:
-        - $ref: '#/components/parameters/productIds'
-        - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/productIds'
+      - $ref: '#/components/parameters/lang'
       responses:
         "200":
           content:
@@ -683,10 +505,10 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get list of Products by IDs
       tags:
-        - Products
+      - Products
   /products/{productIds}:
     get:
       deprecated: true
@@ -694,8 +516,8 @@ paths:
         \ Returns a list of products from the shop backend which match the given productIds."
       operationId: productsProductIdsGetOld
       parameters:
-        - $ref: '#/components/parameters/productIds'
-        - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/productIds'
+      - $ref: '#/components/parameters/lang'
       responses:
         "200":
           content:
@@ -712,19 +534,19 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get list of Products by IDs
       tags:
-        - Products
+      - Products
   /storefront-url:
     get:
       description: Returns a Storefront URL which is build out of the given identifier
         properties in FirstSpirit.
       operationId: storefrontUrlGet
       parameters:
-        - $ref: '#/components/parameters/type'
-        - $ref: '#/components/parameters/id'
-        - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/type'
+      - $ref: '#/components/parameters/id'
+      - $ref: '#/components/parameters/lang'
       responses:
         "200":
           content:
@@ -742,41 +564,41 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
       security:
-        - basicAuth: []
+      - basicAuth: []
       summary: Get Storefront URL
       tags:
-        - Mapping
+      - Mapping
 components:
   examples:
     Categories:
       summary: Categories
       value:
-        - id: category-1
-          label: Electronics
-        - id: category-2
-          label: Cameras
-        - id: category-3
-          label: Accessories
-        - id: category-4
-          label: Headphones
+      - id: category-1
+        label: Electronics
+      - id: category-2
+        label: Cameras
+      - id: category-3
+        label: Accessories
+      - id: category-4
+        label: Headphones
     CategoryListById:
       summary: Category List
       value:
-        - id: cat-1
-          label: Electronics
-        - id: cat-2
-          label: Cameras
+      - id: cat-1
+        label: Electronics
+      - id: cat-2
+        label: Cameras
     CategoryTree:
       summary: Category Tree
       value:
         children:
-          - id: category-1-1
-            label: Category 1.1
-          - children:
-              - id: category-1-2-1
-                label: Category 1.2.1
-            id: category-1-2
-            label: Category 1.1
+        - id: category-1-1
+          label: Category 1.1
+        - children:
+          - id: category-1-2-1
+            label: Category 1.2.1
+          id: category-1-2
+          label: Category 1.1
         id: category-1
         label: Category 1
     ContentPage:
@@ -791,27 +613,27 @@ components:
     ContentPageList:
       summary: Content Page List
       value:
-        - extract: /homepage/
-          id: homepage
-          label: Homepage
-        - extract: /my-custom-page/
-          id: my-custom-page
-          label: My Custom Page
-        - extract: /my-custom-page-x/
-          id: my-custom-page-x
-          label: My Custom Page X
-        - extract: /landingpage/
-          id: landingpage
-          label: Landing Page
+      - extract: /homepage/
+        id: homepage
+        label: Homepage
+      - extract: /my-custom-page/
+        id: my-custom-page
+        label: My Custom Page
+      - extract: /my-custom-page-x/
+        id: my-custom-page-x
+        label: My Custom Page X
+      - extract: /landingpage/
+        id: landingpage
+        label: Landing Page
     ContentPageListById:
       summary: Content Page List By Id
       value:
-        - extract: /homepage/
-          id: homepage
-          label: Homepage
-        - extract: /my-custom-page/
-          id: my-custom-page
-          label: My Custom Page
+      - extract: /homepage/
+        id: homepage
+        label: Homepage
+      - extract: /my-custom-page/
+        id: my-custom-page
+        label: My Custom Page
     ContentPageLocalized:
       summary: Content Page with localized values
       value:
@@ -833,39 +655,39 @@ components:
     ProductList:
       summary: Product List
       value:
-        - extract: Camera
-          id: prod-1
-          image: https://mycommerce/prod-1/540/960
-          label: Sony Legria
-          thumbnail: https://mycommerce/prod-1/160/120
-        - extract: Camera
-          id: prod-2
-          image: https://mycommerce/prod-2/540/960
-          label: Canon EOS
-          thumbnail: https://mycommerce/prod-2/160/120
-        - extract: Camera
-          id: prod-3
-          image: https://mycommerce/prod-3/540/960
-          label: PowerShot A480
-          thumbnail: https://mycommerce/prod-3/160/120
-        - extract: Camera
-          id: prod-4
-          image: https://mycommerce/prod-4/540/960
-          label: Gigashot K80H
-          thumbnail: https://mycommerce/prod-4/160/120
+      - extract: Camera
+        id: prod-1
+        image: https://mycommerce/prod-1/540/960
+        label: Sony Legria
+        thumbnail: https://mycommerce/prod-1/160/120
+      - extract: Camera
+        id: prod-2
+        image: https://mycommerce/prod-2/540/960
+        label: Canon EOS
+        thumbnail: https://mycommerce/prod-2/160/120
+      - extract: Camera
+        id: prod-3
+        image: https://mycommerce/prod-3/540/960
+        label: PowerShot A480
+        thumbnail: https://mycommerce/prod-3/160/120
+      - extract: Camera
+        id: prod-4
+        image: https://mycommerce/prod-4/540/960
+        label: Gigashot K80H
+        thumbnail: https://mycommerce/prod-4/160/120
     ProductListById:
       summary: Product List
       value:
-        - extract: Camera
-          id: prod-1
-          image: https://mycommerce/prod-1/540/960
-          label: Sony Legria
-          thumbnail: https://mycommerce/prod-1/160/120
-        - extract: Camera
-          id: prod-2
-          image: https://mycommerce/prod-2/540/960
-          label: Canon EOS
-          thumbnail: https://mycommerce/prod-2/160/120
+      - extract: Camera
+        id: prod-1
+        image: https://mycommerce/prod-1/540/960
+        label: Sony Legria
+        thumbnail: https://mycommerce/prod-1/160/120
+      - extract: Camera
+        id: prod-2
+        image: https://mycommerce/prod-2/540/960
+        label: Canon EOS
+        thumbnail: https://mycommerce/prod-2/160/120
     ProductPage:
       summary: Product Page
       value:
@@ -891,7 +713,7 @@ components:
     categoryIds:
       description: Get one or more categories by their categoryIds (comma-separated).
       example:
-        - ""
+      - ""
       in: path
       name: categoryIds
       required: true
@@ -902,7 +724,7 @@ components:
     contentIds:
       description: Get one or more content pages by contentIds (comma-separated)
       example:
-        - ""
+      - ""
       in: path
       name: contentIds
       required: true
@@ -936,7 +758,7 @@ components:
     productIds:
       description: Get one or more products by productIds (comma-separated)
       example:
-        - ""
+      - ""
       in: path
       name: productIds
       required: true
@@ -958,9 +780,9 @@ components:
       schema:
         type: string
         enum:
-          - category
-          - product
-          - content
+        - category
+        - product
+        - content
     url:
       description: Storefront Url
       in: query
@@ -996,34 +818,42 @@ components:
           type: string
           description: Localized label
       required:
-        - id
-        - label
+      - id
+      - label
     Content:
-      type: object
-    ContentPage:
       type: object
       properties:
         label:
-          type: string
+          type: object
+          additionalProperties:
+            type: string
+            description: Localized label
           description: Localized label
-        nextSiblingId:
-          type: string
-          description: Content Id of the next sibling page
+          properties:
+            empty:
+              type: boolean
         pageUid:
           type: string
           description: The uid of the page used in FirstSpirit.
-        parentId:
-          type: string
-          description: Content Id of the parent page
+        path:
+          type: object
+          additionalProperties:
+            type: string
+            description: Localized path
+          description: Localized path
+          properties:
+            empty:
+              type: boolean
+        released:
+          type: boolean
+          description: Defines visibility of a page.
         template:
           type: string
           description: The name of the template used in FirstSpirit.
-        visible:
-          type: boolean
-          description: Defines visibility of a page.
       required:
-        - label
-        - template
+      - label
+      - path
+      - template
     Extracted:
       type: object
       properties:
@@ -1039,8 +869,8 @@ components:
           type: string
           description: Localized label
       required:
-        - id
-        - label
+      - id
+      - label
     IdProviding:
       type: object
       properties:
@@ -1050,7 +880,7 @@ components:
             \ are forbidden"
           pattern: " ^[^,\\\\\\s]+$"
       required:
-        - id
+      - id
     IdentifierObject:
       type: object
       properties:
@@ -1066,12 +896,12 @@ components:
           type: string
           description: Page Type
           enum:
-            - category
-            - product
-            - contentpage
+          - category
+          - product
+          - contentpage
       required:
-        - id
-        - type
+      - id
+      - type
     Labelled:
       type: object
       properties:
@@ -1084,8 +914,8 @@ components:
           type: string
           description: Localized label
       required:
-        - id
-        - label
+      - id
+      - label
     LocalizedString:
       type: object
       additionalProperties:
@@ -1120,8 +950,8 @@ components:
           description: Thumbnail URL. Thumbnail will be scaled down if size exceeds
             100x100 pixels.
       required:
-        - id
-        - label
+      - id
+      - label
     StorefrontUrl:
       type: object
       properties:
