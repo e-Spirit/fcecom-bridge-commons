@@ -37,7 +37,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 3.0.0
+  version: 3.0.1
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png
@@ -100,8 +100,14 @@ paths:
             X-Total:
               $ref: '#/components/headers/total'
               style: simple
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get Categories
@@ -143,8 +149,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Labelled'
           description: List of Categories or `null` if it does not exist.
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get list of Categories by their IDs.
@@ -176,8 +188,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Category'
           description: Category Tree
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get Category Tree
@@ -194,6 +212,10 @@ paths:
           description: Category tree endpoint exists
         "404":
           description: Category tree endpoint doesn't exist
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Support Category Tree
@@ -222,8 +244,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Labelled'
           description: List of Categories or `null` if it does not exist.
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get list of Categories by their IDs.
@@ -258,8 +286,14 @@ paths:
             X-Total:
               $ref: '#/components/headers/total'
               style: simple
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get a list of Content Pages
@@ -307,9 +341,13 @@ paths:
                 $ref: '#/components/schemas/IdProviding'
           description: Identifier Object
         "400":
-          description: Bad Request. Missing or incorrect parameters
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Create Content Page
@@ -335,8 +373,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Extracted'
           description: List of Content Pages or `null` if it does not exist
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get list of Content Pages by IDs
@@ -357,8 +401,16 @@ paths:
       responses:
         "204":
           description: Deletion successful
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "404":
+          $ref: '#/components/responses/NotFoundError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Delete Content Page
@@ -388,10 +440,16 @@ paths:
       responses:
         "201":
           description: Update successful
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
         "404":
-          description: Content Page not found
+          $ref: '#/components/responses/NotFoundError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Update Content Page
@@ -418,8 +476,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/IdentifierObject'
           description: Identifier Object or `null` if it does not exist.
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get Storefront URL Identifier
@@ -459,8 +523,14 @@ paths:
             X-Total:
               $ref: '#/components/headers/total'
               style: simple
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get list of Products
@@ -502,8 +572,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
           description: List of Products or `null` if it does not exist
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get list of Products by IDs
@@ -531,8 +607,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
           description: List of Products or `null` if it does not exist.
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get list of Products by IDs
@@ -561,8 +643,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/StorefrontUrl'
           description: A Storefront URL or `null` if it does not exist.
+        "400":
+          $ref: '#/components/responses/BadRequestError'
         "401":
           $ref: '#/components/responses/UnauthorizedError'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "501":
+          $ref: '#/components/responses/NotImplementedError'
       security:
       - basicAuth: []
       summary: Get Storefront URL
@@ -792,8 +880,14 @@ components:
         type: string
         format: url
   responses:
+    BadRequestError:
+      description: Missing or incorrect parameters
+    InternalServerError:
+      description: Shop backend is not available or other issues with the server
     NotFoundError:
       description: Requested resource can not be found
+    NotImplementedError:
+      description: Endpoint is not implemented
     UnauthorizedError:
       description: Authentication information is missing or invalid
       headers:

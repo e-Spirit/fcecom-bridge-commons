@@ -34,7 +34,6 @@ const handleError = (response, err) => {
 
 const ErrorCode = {
     UNKNOWN: '0000',
-    URL_ALREADY_EXISTS: '1010',
     TEMPLATE_NOT_MAPPED: '1020',
     FIELD_MUST_BE_UNIQUE: '1030',
     FIELD_REQUIRED: '1040'

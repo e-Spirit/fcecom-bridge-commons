@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.1.0...v2.1.1) (2023-11-27)
+
+### Changes
+
+* Added missing status codes.
+* Removed unused error codes.
+
 ## [2.1.0](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.0.0...v2.1.0) (2023-10-25)
 
 ### Changes

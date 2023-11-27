@@ -73,9 +73,9 @@ const BridgeCore = async (config) => {
             logger.logInfo(
                 PACKAGE_NAME,
                 LOGGING_NAME,
-                `Your server is listening on port ${config.port} (https://localhost:${config.port})`
+                `Your server is listening on port ${config.port} (http://localhost:${config.port})`
             );
-            logger.logInfo(PACKAGE_NAME, LOGGING_NAME, `Swagger-ui is available on https://localhost:${config.port}/docs`);
+            logger.logInfo(PACKAGE_NAME, LOGGING_NAME, `Swagger-ui is available on http://localhost:${config.port}/docs`);
         });
     }
 
