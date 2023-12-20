@@ -37,7 +37,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 3.0.1
+  version: 3.0.2
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png
@@ -467,15 +467,12 @@ paths:
           content:
             application/json:
               examples:
-                Does not exist in Storefront:
-                  $ref: '#/components/examples/NotExist'
-                  description: Does not exist in Storefront
                 Product Page:
                   $ref: '#/components/examples/ProductPage'
                   description: Product Page
               schema:
                 $ref: '#/components/schemas/IdentifierObject'
-          description: Identifier Object or `null` if it does not exist.
+          description: "Identifier Object or `{}` if it does not exist."
         "400":
           $ref: '#/components/responses/BadRequestError'
         "401":
@@ -637,9 +634,6 @@ paths:
                 Product Storefront Url:
                   $ref: '#/components/examples/StorefrontUrl'
                   description: Product Storefront Url
-                URL was not found in Storefront:
-                  $ref: '#/components/examples/UrlNotFound'
-                  description: URL was not found in Storefront
               schema:
                 $ref: '#/components/schemas/StorefrontUrl'
           description: A Storefront URL or `null` if it does not exist.
@@ -661,13 +655,13 @@ components:
     Categories:
       summary: Categories
       value:
-      - id: category-1
+      - id: cat-1
         label: Electronics
-      - id: category-2
+      - id: cat-2
         label: Cameras
-      - id: category-3
+      - id: cat-3
         label: Accessories
-      - id: category-4
+      - id: cat-4
         label: Headphones
     CategoryListById:
       summary: Category List
@@ -679,37 +673,35 @@ components:
     CategoryTree:
       summary: Category Tree
       value:
-        children:
-        - id: category-1-1
-          label: Category 1.1
+      - children:
+        - id: cat-1-1
+          label: Smartphone
         - children:
-          - id: category-1-2-1
-            label: Category 1.2.1
-          id: category-1-2
-          label: Category 1.1
-        id: category-1
-        label: Category 1
-    ContentPage:
-      summary: Content Page
-      value:
-        label: Homepage
-        nextSiblingId: null
-        pageUid: uid
-        parentId: null
-        template: content
-        visible: true
+          - id: cat-1-2-1
+            label: Smartwatches
+          id: cat-1-2
+          label: Wearables
+        id: cat-1
+        label: Electronics
+      - children:
+        - id: cat-2-1
+          label: DSLR Cameras
+        - id: cat-2-2
+          label: Action Cameras
+        id: cat-2
+        label: Cameras
     ContentPageList:
       summary: Content Page List
       value:
       - extract: /homepage/
         id: homepage
         label: Homepage
-      - extract: /my-custom-page/
-        id: my-custom-page
-        label: My Custom Page
-      - extract: /my-custom-page-x/
-        id: my-custom-page-x
-        label: My Custom Page X
+      - extract: /about-us/
+        id: about
+        label: About Us
+      - extract: /faq/
+        id: faq
+        label: Frequently Asked Questions
       - extract: /landingpage/
         id: landingpage
         label: Landing Page
@@ -719,49 +711,47 @@ components:
       - extract: /homepage/
         id: homepage
         label: Homepage
-      - extract: /my-custom-page/
-        id: my-custom-page
-        label: My Custom Page
+      - extract: /about-us/
+        id: about-us
+        label: About Us
     ContentPageLocalized:
       summary: Content Page with localized values
       value:
         label:
           de: Startseite
           en: Homepage
-        pageUid: uid
+        pageUid: homepage
         path:
-          de: path/to/de
-          en: path/to/en
+          de: /startseite
+          en: /homepage
         released: true
         template: content
     ContentPageResponse:
       summary: Content Page
       value:
-        id: content-3
-    NotExist:
-      summary: Does not exist in Storefront
+        id: homepage
     ProductList:
       summary: Product List
       value:
       - extract: Camera
         id: prod-1
         image: https://mycommerce/prod-1/540/960
-        label: Sony Legria
+        label: PhotonFlare N389
         thumbnail: https://mycommerce/prod-1/160/120
       - extract: Camera
         id: prod-2
         image: https://mycommerce/prod-2/540/960
-        label: Canon EOS
+        label: Apex B756
         thumbnail: https://mycommerce/prod-2/160/120
       - extract: Camera
         id: prod-3
         image: https://mycommerce/prod-3/540/960
-        label: PowerShot A480
+        label: Quantum A480
         thumbnail: https://mycommerce/prod-3/160/120
       - extract: Camera
         id: prod-4
         image: https://mycommerce/prod-4/540/960
-        label: Gigashot K80H
+        label: Specter K80H
         thumbnail: https://mycommerce/prod-4/160/120
     ProductListById:
       summary: Product List
@@ -769,12 +759,12 @@ components:
       - extract: Camera
         id: prod-1
         image: https://mycommerce/prod-1/540/960
-        label: Sony Legria
+        label: PhotonFlare N389
         thumbnail: https://mycommerce/prod-1/160/120
       - extract: Camera
         id: prod-2
         image: https://mycommerce/prod-2/540/960
-        label: Canon EOS
+        label: Apex B756
         thumbnail: https://mycommerce/prod-2/160/120
     ProductPage:
       summary: Product Page
@@ -785,9 +775,7 @@ components:
     StorefrontUrl:
       summary: Product Storefront URL
       value:
-        url: https://mycommerce.com/catalog/category-1-1/prod-x
-    UrlNotFound:
-      summary: URL not found in Storefront
+        url: /cameras/digital-cameras/832382
   headers:
     hasNext:
       description: "Is `true`, if one more pages exist"
@@ -890,10 +878,6 @@ components:
       description: Endpoint is not implemented
     UnauthorizedError:
       description: Authentication information is missing or invalid
-      headers:
-        WWW_Authenticate:
-          schema:
-            type: string
   schemas:
     Category:
       type: object
