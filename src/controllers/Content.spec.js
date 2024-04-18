@@ -1,6 +1,7 @@
 const { generateRequestMock, generateResponseMock } = require('../../src/utils/testUtils');
 const Content = require('../../src/controllers/Content');
 const writer = require('../../src/utils/writer');
+const { ParameterValidationError } = require('../utils/errors');
 
 jest.mock('../../src/utils/writer.js', () => ({
     respondWithCode: (code, payload) => ({ code, payload }),
@@ -73,6 +74,31 @@ describe('Content', () => {
 
             expect(service.contentGet.mock.calls.length).toBe(0);
             expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({ code: 400, payload: {error: '"page" is not a number'}}));
+        });
+        it('returns error on invalid query', async () => {
+            const resMock = generateResponseMock();
+            const reqMock = generateRequestMock();
+
+            const testQuery = null;
+            const testLang = 'en';
+            const testPage = 1;
+
+            reqMock.query = {
+                q: testQuery,
+                lang: testLang,
+                page: testPage
+            };
+
+            service.contentGet.mockImplementation(() => {
+                throw new ParameterValidationError(`Mandatory parameter 'query' not provided.`);
+            });
+
+            await controller.contentGet(reqMock, resMock);
+
+            expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
+                code: 400,
+                payload: { error: `Mandatory parameter 'query' not provided.` }
+            }));
         });
     });
     describe('contentContentIdsGet', () => {

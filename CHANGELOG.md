@@ -1,3 +1,10 @@
+## [2.2.0](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.1.2...v2.2.0) (2024-04-18)
+
+### Changes
+
+* Fixed security vulnerabilities located in express (CVE-2024-29041) by updating the relevant dependencies.
+* Improved the error handling for requests failing to have a query parameter.
+
 ## [2.1.2](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.1.1...v2.1.2) (2023-12-20)
 
 ### Changes

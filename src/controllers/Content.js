@@ -72,8 +72,12 @@ module.exports = function (service, features) {
                 let { q, lang, page } = extractParameters(req.query);
                 page = page && getNumber(page, 'page');
                 const response = await service.contentGet(q, lang, page);
-                res.set({ 'X-Total': response.total, 'X-HasNext': response.hasNext });
-                writeJson(res, response.content);
+                if (response?.content) {
+                    res.set({ 'X-Total': response.total, 'X-HasNext': response.hasNext });
+                    writeJson(res, response.content);
+                } else {
+                    writeJson(res, response)
+                }
             } catch (err) {
                 handleError(res, err);
             }
