@@ -1,3 +1,9 @@
+## [2.3.0](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.2.1...v2.3.0) (2024-06-20)
+
+### Changes
+
+* Added optional search parameter to the categories endpoint.
+
 ## [2.2.1](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.2.0...v2.2.1) (2024-05-17)
 
 ### Changes

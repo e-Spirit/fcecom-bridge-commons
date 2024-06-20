@@ -16,9 +16,9 @@ module.exports = function (service, features) {
             `Received ${req.method} request on /categories with parameters ${JSON.stringify({ ...req.query })}`
         );
         try {
-            let { parentId, lang, page } = extractParameters(req.query);
+            let { parentId, q, lang, page } = extractParameters(req.query);
             page = page && getNumber(page, 'page');
-            const response = await service.categoriesGet(parentId, lang, page);
+            const response = await service.categoriesGet(parentId, q, lang, page);
             if (response.categories) {
                 res.set({ 'X-Total': response.total, 'X-HasNext': response.hasNext });
                 utils.writeJson(res, response.categories);

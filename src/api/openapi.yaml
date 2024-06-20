@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   description: "# Introduction\n\nThe Bridge API serves as a REST interface which\
     \ is able to fetch content, product and category information from any shop backend\
@@ -37,7 +37,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 3.0.2
+  version: 3.1.0
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png
@@ -78,6 +78,7 @@ paths:
         name: parentId
         schema:
           type: string
+      - $ref: '#/components/parameters/query'
       - $ref: '#/components/parameters/lang'
       - $ref: '#/components/parameters/page'
       responses:
