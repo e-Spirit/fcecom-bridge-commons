@@ -26,7 +26,7 @@ const handleError = (response, err) => {
             /* case error is in code and has nothing to do with http calls */
             error = { status: 500, data: { error: 'Unknown error occured' } };
         }
-        const errorResponse = respondWithCode(error.status, error.data);
+        const errorResponse = respondWithCode(error.status, { error: typeof error.data === 'string' ? error.data : error.data.error });
         writeJson(response, errorResponse);
     }
     logger.logError(PACKAGE_NAME, LOGGING_NAME, `An error occured`, err);

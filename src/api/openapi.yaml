@@ -37,7 +37,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 3.1.0
+  version: 3.2.0
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png
@@ -116,17 +116,17 @@ paths:
       - Categories
   /categories/ids:
     head:
-      description: "Checks if the [new Category endpoint](#/Categories/categoriesCategoryIdsGet)\
-        \ is implemented.\n\nIf it is not implemented the old endpoint will be used."
+      description: "Checks if the [Categories IDs endpoint](#/Categories/categoriesCategoryIdsGet)\
+        \ is implemented.\n\n"
       operationId: categoriesCategoryIdsHead
       responses:
         "200":
-          description: New Category endpoint exists.
+          description: Categories IDs endpoint exists.
         "404":
-          description: New Category endpoint doesn't exist.
+          description: Categories IDs endpoint doesn't exist.
       security:
       - basicAuth: []
-      summary: Support new Category endpoint
+      summary: Check for Categories IDs endpoint
       tags:
       - Categories
   /categories/ids/{categoryIds}:
@@ -220,42 +220,6 @@ paths:
       security:
       - basicAuth: []
       summary: Support Category Tree
-      tags:
-      - Categories
-  /categories/{categoryIds}:
-    get:
-      deprecated: true
-      description: "Deprecated: Please use /categories/ids/{categoryIds} instead.\
-        \ \n Returns a list of categories from the shop backend that match the given\
-        \ categoryIds."
-      operationId: categoriesCategoryIdsGetOld
-      parameters:
-      - $ref: '#/components/parameters/categoryIds'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                Category List:
-                  $ref: '#/components/examples/CategoryListById'
-                  description: Category List
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Labelled'
-          description: List of Categories or `null` if it does not exist.
-        "400":
-          $ref: '#/components/responses/BadRequestError'
-        "401":
-          $ref: '#/components/responses/UnauthorizedError'
-        "500":
-          $ref: '#/components/responses/InternalServerError'
-        "501":
-          $ref: '#/components/responses/NotImplementedError'
-      security:
-      - basicAuth: []
-      summary: Get list of Categories by their IDs.
       tags:
       - Categories
   /content:
@@ -536,17 +500,17 @@ paths:
       - Products
   /products/ids:
     head:
-      description: "Checks if the [new Product endpoint](#/Products/productsProductIdsGet)\
-        \ is implemented.\n\nIf it is not implemented the old endpoint will be used."
+      description: "Checks if the [Products IDs endpoint](#/Products/productsProductIdsGet)\
+        \ is implemented.\n\n"
       operationId: productsProductIdsHead
       responses:
         "200":
-          description: New Category endpoint exists.
+          description: Products IDs endpoint exists.
         "404":
-          description: New Category endpoint doesn't exist.
+          description: Products IDs endpoint doesn't exist.
       security:
       - basicAuth: []
-      summary: Support new Products endpoint
+      summary: Check for Products IDs endpoint
       tags:
       - Products
   /products/ids/{productIds}:
@@ -570,41 +534,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
           description: List of Products or `null` if it does not exist
-        "400":
-          $ref: '#/components/responses/BadRequestError'
-        "401":
-          $ref: '#/components/responses/UnauthorizedError'
-        "500":
-          $ref: '#/components/responses/InternalServerError'
-        "501":
-          $ref: '#/components/responses/NotImplementedError'
-      security:
-      - basicAuth: []
-      summary: Get list of Products by IDs
-      tags:
-      - Products
-  /products/{productIds}:
-    get:
-      deprecated: true
-      description: "Deprecated: Please use /products/ids/{productIds} instead. \n\
-        \ Returns a list of products from the shop backend which match the given productIds."
-      operationId: productsProductIdsGetOld
-      parameters:
-      - $ref: '#/components/parameters/productIds'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                Product List:
-                  $ref: '#/components/examples/ProductListById'
-                  description: Product List
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-          description: List of Products or `null` if it does not exist.
         "400":
           $ref: '#/components/responses/BadRequestError'
         "401":
@@ -870,14 +799,34 @@ components:
         format: url
   responses:
     BadRequestError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
       description: Missing or incorrect parameters
     InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
       description: Shop backend is not available or other issues with the server
     NotFoundError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
       description: Requested resource can not be found
     NotImplementedError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
       description: Endpoint is not implemented
     UnauthorizedError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
       description: Authentication information is missing or invalid
   schemas:
     Category:
@@ -933,6 +882,11 @@ components:
       - label
       - path
       - template
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     Extracted:
       type: object
       properties:

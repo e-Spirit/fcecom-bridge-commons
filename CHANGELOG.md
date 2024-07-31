@@ -1,3 +1,12 @@
+## [2.3.1](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.3.0...v2.3.1) (2024-07-31)
+
+### Changes
+
+* Use latest API schema definition.
+* Adjust error responses according to definition.
+* Remove deprecated endpoints for /categories/{ids} and /products/{ids}.
+* Updated openapi.yaml.
+
 ## [2.3.0](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.2.1...v2.3.0) (2024-06-20)
 
 ### Changes

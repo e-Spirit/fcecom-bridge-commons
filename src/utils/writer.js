@@ -33,8 +33,10 @@ const writeJson = function (response, arg1, arg2) {
     }
     if (typeof payload === 'object') {
         payload = JSON.stringify(payload, null, 2);
+        response.writeHead(code, { 'Content-Type': 'application/json' });
+    } else {
+        response.writeHead(code, { 'Content-Type': 'plain/text' });
     }
-    response.writeHead(code, { 'Content-Type': 'application/json' });
     response.end(payload);
 };
 

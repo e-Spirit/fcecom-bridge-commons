@@ -59,15 +59,6 @@ module.exports = function (service, features) {
         res.sendStatus(200);
     };
 
-    /* method to support deprecated route */
-    const categoriesCategoryIdsGetOld = async function categoriesCategoryIdsGetOld(req, res) {
-        // Remove first element if it is "ids" as this is caused by the legacy route matching
-        if (req.params.categoryIds) {
-            req.params.categoryIds = req.params.categoryIds.replace(/^ids,?/, '');
-        }
-        await categoriesCategoryIdsGet(req, res);
-    };
-
     const categoryTreeGet = async function categoryTreeGet(req, res) {
         if (req.method === 'HEAD') {
             categoryTreeHead(req, res);
@@ -103,7 +94,6 @@ module.exports = function (service, features) {
     return {
         categoriesGet,
         categoriesCategoryIdsGet,
-        categoriesCategoryIdsGetOld,
         categoriesCategoryIdsHead,
         categoryTreeGet,
         categoryTreeHead

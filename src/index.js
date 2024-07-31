@@ -34,7 +34,7 @@ const BridgeCore = async (config) => {
                 }
 
                 response.set('WWW-Authenticate', 'Basic realm="401"');
-                response.status(401).send('Authentication required.');
+                response.status(401).json({ error: 'Authentication required.'});
             }
         },
         onCreateRoute
@@ -50,6 +50,15 @@ const BridgeCore = async (config) => {
 
     const connect = connector(api, apiDefinition, options); // make the connector
     connect(app);
+
+
+    // Add implementation of HEAD endpoints that are not handled by the swagger-routes-express framework
+    if (api.productsProductIdsHead) {
+        app.head('/api/products/ids', api.productsProductIdsHead);
+    }
+    if (api.categoriesCategoryIdsHead) {
+        app.head('/api/categories/ids', api.categoriesCategoryIdsHead);
+    }
 
     if (config.useSsl) {
         https

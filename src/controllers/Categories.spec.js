@@ -31,10 +31,12 @@ describe('Categories', () => {
 
             const testParameterParentId = 'replace-calm-attached';
             const testLang = 'en';
+            const testQuery = 'query';
             const testPage = 1;
 
             reqMock.query = {
                 parentId: testParameterParentId,
+                q: testQuery,
                 lang: testLang,
                 page: testPage
             };
@@ -43,8 +45,9 @@ describe('Categories', () => {
 
             expect(service.categoriesGet.mock.calls.length).toBe(1);
             expect(service.categoriesGet.mock.calls[0][0]).toEqual(testParameterParentId);
-            expect(service.categoriesGet.mock.calls[0][1]).toEqual(testLang);
-            expect(service.categoriesGet.mock.calls[0][2]).toEqual(testPage);
+            expect(service.categoriesGet.mock.calls[0][1]).toEqual(testQuery);
+            expect(service.categoriesGet.mock.calls[0][2]).toEqual(testLang);
+            expect(service.categoriesGet.mock.calls[0][3]).toEqual(testPage);
             expect(writer.writeJson).toHaveBeenCalledTimes(1);
         });
         it('returns error on invalid page', async () => {
@@ -123,35 +126,6 @@ describe('Categories', () => {
 
             expect(service.categoriesCategoryIdsGet.mock.calls.length).toBe(0);
             expect(resMock.sendStatus).toBeCalledWith(200);
-        });
-    });
-    describe('categoriesCategoryIdsGetOld (deprecated)', () => {
-        it('calls categoriesCategoryIdsGet method from service and adjust ids', async () => {
-            const resMock = generateResponseMock();
-            const reqMock = generateRequestMock();
-
-            const testCategoriesParameter = 'ids,1,2,3';
-            const categories = testCategoriesParameter.split(',');
-            service.categoriesCategoryIdsGet.mockResolvedValue({
-                categories,
-                total: 1,
-                hasNext: false
-            });
-            const testLang = 'en';
-            reqMock.query = {
-                lang: testLang
-            };
-            reqMock.params = {
-                categoryIds: testCategoriesParameter
-            };
-
-            await controller.categoriesCategoryIdsGetOld(reqMock, resMock);
-
-            expect(service.categoriesCategoryIdsGet.mock.calls.length).toBe(1);
-            // Remove "ids" as this is caused by the deprecated route matching first
-            expect(service.categoriesCategoryIdsGet.mock.calls[0][0]).toEqual(categories.slice(1));
-            expect(service.categoriesCategoryIdsGet.mock.calls[0][1]).toEqual(testLang);
-            expect(writer.writeJson).toHaveBeenCalledTimes(1);
         });
     });
     describe('categoryTreeGet', () => {

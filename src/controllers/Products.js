@@ -52,19 +52,9 @@ module.exports = function (service) {
         res.sendStatus(200);
     };
 
-    /* method to support deprecated route */
-    const productsProductIdsGetOld = async function productsProductIdsGetOld(req, res) {
-        // Remove first element if it is "ids" as this is caused by the legacy route matching
-        if (req.params.productIds) {
-            req.params.productIds = req.params.productIds.replace(/^ids,?/, '');
-        }
-        await productsProductIdsGet(req, res);
-    };
-
     return {
         productsGet,
         productsProductIdsGet,
-        productsProductIdsGetOld,
         productsProductIdsHead
     };
 };
