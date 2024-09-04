@@ -1,3 +1,12 @@
+## [2.4.0](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.3.1...v2.4.0) (2024-09-04)
+
+### Changes
+
+* Updated dependencies to fix an error with the category tree in the Swagger UI (/docs).
+* Updated openapi.yaml.
+* Fixed some minor ESLint findings.
+* Fixed security vulnerabilities located in braces (CVE-2024-4068) and micromatch (CVE-2024-4067) by updating the relevant dependencies.
+
 ## [2.3.1](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.3.0...v2.3.1) (2024-07-31)
 
 ### Changes

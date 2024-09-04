@@ -20,10 +20,10 @@ describe('parameterExtractor', () => {
 
             expect(result).not.toBe(obj); // Cloned
             expect(result.ValidString).toEqual('STRING');
-            expect(result.hasOwnProperty('EmptyString')).toEqual(false);
-            expect(result.hasOwnProperty('SpacesString')).toEqual(false);
-            expect(result.hasOwnProperty('UndefinedEntry')).toEqual(false);
-            expect(result.hasOwnProperty('NullEntry')).toEqual(false);
+            expect(Object.prototype.hasOwnProperty.call(result, 'EmptyString')).toEqual(false);
+            expect(Object.prototype.hasOwnProperty.call(result, 'SpacesString')).toEqual(false);
+            expect(Object.prototype.hasOwnProperty.call(result, 'UndefinedEntry')).toEqual(false);
+            expect(Object.prototype.hasOwnProperty.call(result, 'NullEntry')).toEqual(false);
             expect(result.FalseEntry).toEqual(false);
             expect(result.TrueEntry).toEqual(true);
             expect(result.NumericEntry).toEqual(123);

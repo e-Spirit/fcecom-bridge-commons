@@ -19,7 +19,7 @@ const isEmpty = function (value) {
 const extractParameters = function (obj) {
     const result = {};
     Object.keys(obj).forEach((key) => {
-        if (obj.hasOwnProperty(key) && !isEmpty(obj[key])) {
+        if (Object.prototype.hasOwnProperty.call(obj, key) && !isEmpty(obj[key])) {
             result[key] = obj[key];
         }
     });

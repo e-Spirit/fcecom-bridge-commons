@@ -2,7 +2,6 @@ const { handleError } = require('./errorUtils');
 const { generateResponseMock } = require('./testUtils');
 const { writeJson } = require('../utils/writer');
 const { ParameterValidationError, BodyValidationError } = require('./errors');
-const { getLogger } = require('./logger');
 
 jest.mock('../utils/writer', () => ({
     respondWithCode: (code, payload) => ({ code, payload }),

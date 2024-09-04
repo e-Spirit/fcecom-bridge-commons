@@ -106,7 +106,7 @@ describe('Products', () => {
             expect(service.productsProductIdsGet.mock.calls.length).toBe(0);
             expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
                 code: 400,
-                payload: { error: '\"productIds\" is an empty string' }
+                payload: { error: '"productIds" is an empty string' }
             }));
         });
         it('handles HEAD requests', async () => {

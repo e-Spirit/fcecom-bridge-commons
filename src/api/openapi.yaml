@@ -37,7 +37,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: FirstSpirit Connect for Commerce - Bridge API
-  version: 3.2.0
+  version: 3.3.0
   x-logo:
     altText: Crownpeak Technology GmbH Logo
     url: crownpeak-Logo-Full-Color.png
@@ -72,6 +72,13 @@ paths:
         \ or none was set, it displays all categories in the master language by default."
       operationId: categoriesGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - description: Filter by parentId. It returns all related categories and subcategories
           from the category tree.
         in: query
@@ -135,6 +142,13 @@ paths:
         given categoryIds.
       operationId: categoriesCategoryIdsGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - $ref: '#/components/parameters/categoryIds'
       - $ref: '#/components/parameters/lang'
       responses:
@@ -170,6 +184,13 @@ paths:
         \ all categories in the master language by default."
       operationId: categoryTreeGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - description: Filter by parentId
         in: query
         name: parentId
@@ -228,6 +249,13 @@ paths:
         using the query parameters listed below.
       operationId: contentGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - $ref: '#/components/parameters/query'
       - $ref: '#/components/parameters/lang'
       - $ref: '#/components/parameters/page'
@@ -284,6 +312,14 @@ paths:
       description: Create a new Content Page in the storefront and its page reference
         in FirstSpirit.
       operationId: contentPost
+      parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -323,6 +359,13 @@ paths:
       description: Returns a list of Content Pages which match the given contentIds.
       operationId: contentContentIdsGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - $ref: '#/components/parameters/contentIds'
       - $ref: '#/components/parameters/lang'
       responses:
@@ -426,6 +469,13 @@ paths:
         in FirstSpirit to identify the page.
       operationId: lookupUrlGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - $ref: '#/components/parameters/url'
       responses:
         "200":
@@ -457,6 +507,13 @@ paths:
         can be filtered using the query parameters listed below.
       operationId: productsGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - description: Filter by categoryId
         in: query
         name: categoryId
@@ -519,6 +576,13 @@ paths:
         given productIds.
       operationId: productsProductIdsGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - $ref: '#/components/parameters/productIds'
       - $ref: '#/components/parameters/lang'
       responses:
@@ -553,6 +617,13 @@ paths:
         properties in FirstSpirit.
       operationId: storefrontUrlGet
       parameters:
+      - description: "Expect this header to be sent to the bridge, containing the\
+          \ FirstSpirit Project UUID"
+        example: 11111111-aaaa-2222-bbbb-333333333333
+        in: header
+        name: X-FS-Project-UUID
+        schema:
+          type: string
       - $ref: '#/components/parameters/type'
       - $ref: '#/components/parameters/id'
       - $ref: '#/components/parameters/lang'

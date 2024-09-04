@@ -145,7 +145,7 @@ describe('Content', () => {
             expect(service.contentContentIdsGet.mock.calls.length).toBe(0);
             expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
                 code: 400,
-                payload: { error: '\"contentIds\" is an empty string' }
+                payload: { error: '"contentIds" is an empty string' }
             }));
         });
     });
@@ -185,7 +185,7 @@ describe('Content', () => {
             expect(service.contentPost.mock.calls.length).toBe(0);
             expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
                 code: 400,
-                payload: { error: '\"body\" is an empty object' }
+                payload: { error: '"body" is an empty object' }
             }));
         });
     });
@@ -205,7 +205,7 @@ describe('Content', () => {
             expect(service.contentContentIdPut.mock.calls.length).toBe(0);
             expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
                 code: 400,
-                payload: { error: '\"contentId\" is not a string' }
+                payload: { error: '"contentId" is not a string' }
             }));
         });
         it('writes an error for empty body', async () => {
@@ -222,7 +222,7 @@ describe('Content', () => {
             expect(service.contentContentIdPut.mock.calls.length).toBe(0);
             expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
                 code: 400,
-                payload: { error: '\"body\" is an empty object' }
+                payload: { error: '"body" is an empty object' }
             }));
         });
     });
@@ -242,7 +242,7 @@ describe('Content', () => {
             expect(service.contentContentIdDelete.mock.calls.length).toBe(0);
             expect(writer.writeJson).toBeCalledWith(resMock, expect.objectContaining({
                 code: 400,
-                payload: { error: '\"contentId\" is not a string' }
+                payload: { error: '"contentId" is not a string' }
             }));
         });
     });
