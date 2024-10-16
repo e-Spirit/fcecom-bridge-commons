@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.4.0...v2.4.1) (2024-10-16)
+
+### Changes
+
+* Fixed security vulnerabilities by updating the relevant dependencies.
+* Removed obsolete fcecom-bridge-commons dependency.
+
 ## [2.4.0](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.3.1...v2.4.0) (2024-09-04)
 
 ### Changes
