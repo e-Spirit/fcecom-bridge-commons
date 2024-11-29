@@ -40,6 +40,7 @@ module.exports = function (service) {
                 const { lang } = extractParameters(req.query);
                 const productIds = getString(req.params['productIds'], 'productIds').split(',');
                 const response = await service.productsProductIdsGet(productIds, lang);
+                res.set({ 'X-Total': response.total });
                 writeJson(res, response.products);
             } catch (err) {
                 handleError(res, err);

@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.4.1...v2.4.2) (2024-11-29)
+
+### Changes
+
+* Replaced openapi.yaml.
+* Added missing x-total header to /categories/tree and all ids endpoints.
+
 ## [2.4.1](https://github.com/e-Spirit/fcecom-bridge-commons/compare/v2.4.0...v2.4.1) (2024-10-16)
 
 ### Changes

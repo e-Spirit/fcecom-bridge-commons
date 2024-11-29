@@ -44,6 +44,7 @@ module.exports = function (service, features) {
                 const categoryIds = getString(req.params['categoryIds'], 'categoryIds').split(',');
                 const response = await service.categoriesCategoryIdsGet(categoryIds, lang);
                 if (response.categories) {
+                    res.set({ 'X-Total': response.total });
                     utils.writeJson(res, response.categories);
                 } else {
                     utils.writeJson(res, response);
@@ -72,6 +73,7 @@ module.exports = function (service, features) {
                 const { parentId, lang } = extractParameters(req.query);
                 const response = await service.categoryTreeGet(parentId, lang);
                 if (response.categorytree) {
+                    res.set({ 'X-Total': response.total });
                     utils.writeJson(res, response.categorytree);
                 } else {
                     utils.writeJson(res, response);

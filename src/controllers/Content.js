@@ -53,6 +53,7 @@ module.exports = function (service, features) {
             const contentIds = getString(req.params['contentIds'], 'contentIds').split(',');
             const { lang } = extractParameters(req.query);
             const response = await service.contentContentIdsGet(contentIds, lang);
+            res.set({ 'X-Total': response.total });
             writeJson(res, response.content);
         } catch (err) {
             handleError(res, err);
@@ -76,7 +77,7 @@ module.exports = function (service, features) {
                     res.set({ 'X-Total': response.total, 'X-HasNext': response.hasNext });
                     writeJson(res, response.content);
                 } else {
-                    writeJson(res, response)
+                    writeJson(res, response);
                 }
             } catch (err) {
                 handleError(res, err);
