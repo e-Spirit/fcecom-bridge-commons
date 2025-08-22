@@ -36,7 +36,7 @@ module.exports = function (service, features) {
         try {
             const { contentId } = extractParameters(req.params);
             const { body } = req;
-            const response = await service.contentContentIdPut(getObject(body, 'body'), getString(contentId, 'contentId'));
+            const response = await service.contentContentIdPut(getString(contentId, 'contentId'), getObject(body, 'body'));
             writeJson(res, response);
         } catch (err) {
             handleError(res, err);
